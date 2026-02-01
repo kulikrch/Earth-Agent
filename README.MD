@@ -34,7 +34,7 @@ This repository contains the evaluation framework for Earth Agent: Unlocking the
 
 
 ## 📰 News 
-- **[2025.10.27]**: 🎉 Earth-Agent has been accepted at ICLR 2026! Some repository updates will be synchronized. Waiting for us!
+- **[2026.01.26]**: 🎉 Earth-Agent has been accepted at ICLR 2026! Some repository updates will be synchronized. Waiting for us!
 - **[2025.10.27]**: 🎉 We are excited to announce that Synced Review has reported on our article. You can find more details [here](https://www.jiqizhixin.com/articles/2025-10-27-7).
 - **[2025.10.17]**: 🤗 We are excited to release the Earth-Bench dataset. Check out [on huggingface](https://huggingface.co/datasets/Sssunset/Earth-Bench).
 - **[2025.9.27]**: 🔥 We have released **Earth-Agent: Unlocking the Full Landscape of Earth Observation with Agents**. Check out the [paper](https://arxiv.org/pdf/2509.23141). We present Earth-Agent and Earth-Bench.
