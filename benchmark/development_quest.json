@@ -1,0 +1,1092 @@
+{
+  "1": {
+    "tools": [
+      "search_location",
+      "list_collections",
+      "search_images",
+      "download_bands",
+      "lst_single_channel",
+      "calculate_mean_lst_by_ndvi",
+      "subtract"
+    ],
+    "files": [],
+    "dialogs": [
+      {
+        "role": "user",
+        "content": "Оцените изменение теплового контраста района в Коммунарке у адреса: Москва, поселение Сосенское, Скандинавский бульвар, 6. Используйте летние тепловые спутниковые данные за июнь-август 2018 и июнь-август 2022, отдавая приоритет наименьшей облачности. Сравните температуру поверхности зоны застройки относительно окружающих зелёных зон."
+      },
+      {
+        "role": "assistant",
+        "thought": "Нужно определить координаты точного адреса, получить летние тепловые спутниковые данные за 2018 и 2022 годы с минимально возможной облачностью, рассчитать температуру поверхности и сравнить тепловой контраст зоны застройки относительно окружающих зелёных зон.",
+        "tool_calls": []
+      }
+    ],
+    "choices": [
+      "Тепловой контраст зоны застройки относительно зелёных зон заметно вырос: ориентировочно на несколько градусов",
+      "Тепловой контраст вырос незначительно: менее чем на 1 °C",
+      "Зона застройки стала холоднее окружающих зелёных зон",
+      "По летним спутниковым данным 2018 и 2022 годов различий не выявляется"
+    ],
+    "evaluation": [
+      {
+        "question": "Оцените изменение теплового контраста района в Коммунарке у адреса: Москва, поселение Сосенское, Скандинавский бульвар, 6. Используйте летние тепловые спутниковые данные за июнь-август 2018 и июнь-август 2022, отдавая приоритет наименьшей облачности. Сравните температуру поверхности зоны застройки относительно окружающих зелёных зон.",
+        "gt_answer": {
+          "whitelist": "A",
+          "blacklist": null
+        },
+        "data": null,
+        "metric": "string matching",
+        "type": "Instruction Following"
+      }
+    ],
+    "expected_tool_chains": {
+      "multiagent": {
+        "location_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "search_location"
+              }
+            ],
+            [
+              {
+                "name": "search_structured"
+              },
+              {
+                "name": "get_place_details"
+              }
+            ]
+          ]
+        },
+        "data_acquisition_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "list_collections"
+              },
+              {
+                "name": "search_images"
+              },
+              {
+                "name": "download_bands"
+              }
+            ]
+          ]
+        },
+        "main_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "lst_single_channel"
+              },
+              {
+                "name": "calculate_mean_lst_by_ndvi"
+              },
+              {
+                "name": "subtract"
+              }
+            ],
+            [
+              {
+                "name": "split_window"
+              },
+              {
+                "name": "calculate_mean_lst_by_ndvi"
+              },
+              {
+                "name": "subtract"
+              }
+            ],
+            [
+              {
+                "name": "lst_single_channel"
+              },
+              {
+                "name": "calc_batch_image_mean"
+              },
+              {
+                "name": "subtract"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "2": {
+    "tools": [
+      "search_location",
+      "list_collections",
+      "search_images",
+      "download_bands",
+      "calculate_batch_ndbi",
+      "calculate_threshold_ratio",
+      "calculate_batch_threshold_ratio",
+      "percentage_change"
+    ],
+    "files": [],
+    "dialogs": [
+      {
+        "role": "user",
+        "content": "Оцените изменение доли застроенных территорий в районе Новосибирска между 2020 и 2023 годами по малооблачным спутниковым данным, близким к контрольным датам 2020-03-13 и 2023-06-06. При поиске сначала ограничивайте облачность 20% и расширяйте её только если сцен нет."
+      },
+      {
+        "role": "assistant",
+        "thought": "Нужно получить малооблачные спутниковые данные за контрольные даты 2020 и 2023 годов или ближайшие сопоставимые сцены, вычислить подходящий показатель застроенных территорий и сравнить его по годам.",
+        "tool_calls": []
+      }
+    ],
+    "choices": [
+      "В 2023 году показатель застроенности заметно выше, чем в 2020",
+      "В 2023 году показатель застроенности ниже, чем в 2020",
+      "Заметных изменений почти нет",
+      "В 2023 году признаки застроенных территорий отсутствуют"
+    ],
+    "evaluation": [
+      {
+        "question": "Оцените изменение доли застроенных территорий в районе Новосибирска между 2020 и 2023 годами по малооблачным спутниковым данным, близким к контрольным датам 2020-03-13 и 2023-06-06. При поиске сначала ограничивайте облачность 20% и расширяйте её только если сцен нет.",
+        "gt_answer": {
+          "whitelist": "A",
+          "blacklist": null
+        },
+        "data": null,
+        "metric": "string matching",
+        "type": "Instruction Following"
+      }
+    ],
+    "expected_tool_chains": {
+      "multiagent": {
+        "location_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "search_location"
+              }
+            ],
+            [
+              {
+                "name": "search_structured"
+              },
+              {
+                "name": "get_place_details"
+              }
+            ]
+          ]
+        },
+        "data_acquisition_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "list_collections"
+              },
+              {
+                "name": "search_images"
+              },
+              {
+                "name": "download_bands"
+              }
+            ]
+          ]
+        },
+        "main_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "calculate_batch_ndbi"
+              },
+              {
+                "name": "calculate_batch_threshold_ratio"
+              },
+              {
+                "name": "percentage_change"
+              }
+            ],
+            [
+              {
+                "name": "calculate_batch_ndbi"
+              },
+              {
+                "name": "calc_batch_image_hotspot_percentage"
+              },
+              {
+                "name": "percentage_change"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "3": {
+    "tools": [
+      "search_location",
+      "list_collections",
+      "search_images",
+      "download_bands",
+      "calculate_batch_ndbi",
+      "calculate_threshold_ratio",
+      "calculate_batch_threshold_ratio"
+    ],
+    "files": [],
+    "dialogs": [
+      {
+        "role": "user",
+        "content": "Определите характер динамики застроенных территорий в Новосибирске для 2021, 2022 и 2023 годов по малооблачным спутниковым данным. Сравните сцены, близкие к 2021-08-25, 2022-05-27 и 2023-06-06; сначала используйте предел облачности 20%."
+      },
+      {
+        "role": "assistant",
+        "thought": "Нужно получить малооблачные спутниковые данные за 2021, 2022 и 2023 годы в заданных контрольных окнах, вычислить подходящий показатель застроенных территорий и определить характер динамики.",
+        "tool_calls": []
+      }
+    ],
+    "choices": [
+      "Динамика неравномерная: провал в 2022 году и восстановление в 2023",
+      "Показатель застроенных территорий последовательно растёт от 2021 к 2023 году",
+      "Показатель застроенных территорий последовательно снижается",
+      "Максимум наблюдается в 2021 году, минимум — в 2023 году"
+    ],
+    "evaluation": [
+      {
+        "question": "Определите характер динамики застроенных территорий в Новосибирске для 2021, 2022 и 2023 годов по малооблачным спутниковым данным. Сравните сцены, близкие к 2021-08-25, 2022-05-27 и 2023-06-06; сначала используйте предел облачности 20%.",
+        "gt_answer": {
+          "whitelist": "B",
+          "blacklist": null
+        },
+        "data": null,
+        "metric": "string matching",
+        "type": "Instruction Following"
+      }
+    ],
+    "expected_tool_chains": {
+      "multiagent": {
+        "location_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "search_location"
+              }
+            ],
+            [
+              {
+                "name": "search_structured"
+              },
+              {
+                "name": "get_place_details"
+              }
+            ]
+          ]
+        },
+        "data_acquisition_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "list_collections"
+              },
+              {
+                "name": "search_images"
+              },
+              {
+                "name": "download_bands"
+              }
+            ]
+          ]
+        },
+        "main_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "calculate_batch_ndbi"
+              },
+              {
+                "name": "calculate_batch_threshold_ratio"
+              }
+            ],
+            [
+              {
+                "name": "calculate_batch_ndbi"
+              },
+              {
+                "name": "calc_batch_image_hotspot_percentage"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "4": {
+    "tools": [
+      "search_location",
+      "list_collections",
+      "search_images",
+      "download_bands",
+      "calculate_batch_ndvi",
+      "calc_batch_image_mean",
+      "percentage_change"
+    ],
+    "files": [],
+    "dialogs": [
+      {
+        "role": "user",
+        "content": "Оцените изменение растительности в Казани между 2021 и 2023 годами по малооблачным спутниковым данным. Используйте сцены, близкие к 2021-06-03 и 2023-08-17; сначала используйте предел облачности 20%."
+      },
+      {
+        "role": "assistant",
+        "thought": "Нужно получить малооблачные спутниковые данные за контрольные даты 2021 и 2023 годов или ближайшие сопоставимые сцены, вычислить подходящий показатель состояния растительности и сравнить значения.",
+        "tool_calls": []
+      }
+    ],
+    "choices": [
+      "Показатель растительности в 2023 году резко снизился более чем на 30%",
+      "Показатель растительности в 2023 году вырос более чем на 30%",
+      "Показатель растительности в 2023 году ниже, чем в 2021, но без резкой деградации",
+      "Растительность невозможно оценить по доступным спутниковым данным"
+    ],
+    "evaluation": [
+      {
+        "question": "Оцените изменение растительности в Казани между 2021 и 2023 годами по малооблачным спутниковым данным. Используйте сцены, близкие к 2021-06-03 и 2023-08-17; сначала используйте предел облачности 20%.",
+        "gt_answer": {
+          "whitelist": "C",
+          "blacklist": null
+        },
+        "data": null,
+        "metric": "string matching",
+        "type": "Instruction Following"
+      }
+    ],
+    "expected_tool_chains": {
+      "multiagent": {
+        "location_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "search_location"
+              }
+            ],
+            [
+              {
+                "name": "search_structured"
+              },
+              {
+                "name": "get_place_details"
+              }
+            ]
+          ]
+        },
+        "data_acquisition_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "list_collections"
+              },
+              {
+                "name": "search_images"
+              },
+              {
+                "name": "download_bands"
+              }
+            ]
+          ]
+        },
+        "main_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "calculate_batch_ndvi"
+              },
+              {
+                "name": "calc_batch_image_mean"
+              },
+              {
+                "name": "percentage_change"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "5": {
+    "tools": [
+      "search_location",
+      "list_collections",
+      "search_images",
+      "download_bands",
+      "calculate_batch_ndvi",
+      "calculate_threshold_ratio",
+      "calculate_batch_threshold_ratio",
+      "difference"
+    ],
+    "files": [],
+    "dialogs": [
+      {
+        "role": "user",
+        "content": "Сравните долю территории с выраженной растительностью в Казани для 2021 и 2023 годов по малооблачным спутниковым данным. Используйте сцены, близкие к 2021-06-03 и 2023-08-17; сначала используйте предел облачности 20%."
+      },
+      {
+        "role": "assistant",
+        "thought": "Нужно получить малооблачные спутниковые данные за контрольные даты 2021 и 2023 годов или ближайшие сопоставимые сцены, вычислить подходящий показатель выраженной растительности и сравнить долю территории по годам.",
+        "tool_calls": []
+      }
+    ],
+    "choices": [
+      "В 2023 году доля выраженной растительности немного ниже, чем в 2021; резкого изменения нет",
+      "Доля выраженной растительности снизилась более чем на 20 п.п.",
+      "Доля выраженной растительности выросла более чем на 20 п.п.",
+      "В 2023 году признаки выраженной растительности отсутствуют"
+    ],
+    "evaluation": [
+      {
+        "question": "Сравните долю территории с выраженной растительностью в Казани для 2021 и 2023 годов по малооблачным спутниковым данным. Используйте сцены, близкие к 2021-06-03 и 2023-08-17; сначала используйте предел облачности 20%.",
+        "gt_answer": {
+          "whitelist": "A",
+          "blacklist": null
+        },
+        "data": null,
+        "metric": "string matching",
+        "type": "Instruction Following"
+      }
+    ],
+    "expected_tool_chains": {
+      "multiagent": {
+        "location_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "search_location"
+              }
+            ],
+            [
+              {
+                "name": "search_structured"
+              },
+              {
+                "name": "get_place_details"
+              }
+            ]
+          ]
+        },
+        "data_acquisition_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "list_collections"
+              },
+              {
+                "name": "search_images"
+              },
+              {
+                "name": "download_bands"
+              }
+            ]
+          ]
+        },
+        "main_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "calculate_batch_ndvi"
+              },
+              {
+                "name": "calculate_batch_threshold_ratio"
+              },
+              {
+                "name": "difference"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "6": {
+    "tools": [
+      "search_location",
+      "list_collections",
+      "search_images",
+      "download_bands",
+      "calculate_batch_ndbi",
+      "calculate_threshold_ratio",
+      "calculate_batch_threshold_ratio",
+      "min_value_and_index"
+    ],
+    "files": [],
+    "dialogs": [
+      {
+        "role": "user",
+        "content": "В каком году из периода 2021-2023 в районе Новосибирска наблюдается минимальный спутниковый показатель застроенных территорий? Используйте малооблачные сцены, близкие к 2021-08-25, 2022-05-27 и 2023-06-06; сначала используйте предел облачности 20%."
+      },
+      {
+        "role": "assistant",
+        "thought": "Нужно получить малооблачные спутниковые данные за 2021, 2022 и 2023 годы в заданных контрольных окнах, вычислить подходящий показатель застроенных территорий и выбрать год с минимальным значением.",
+        "tool_calls": []
+      }
+    ],
+    "choices": [
+      "2022",
+      "2021",
+      "2023",
+      "Показатель практически одинаков во все годы"
+    ],
+    "evaluation": [
+      {
+        "question": "В каком году из периода 2021-2023 в районе Новосибирска наблюдается минимальный спутниковый показатель застроенных территорий? Используйте малооблачные сцены, близкие к 2021-08-25, 2022-05-27 и 2023-06-06; сначала используйте предел облачности 20%.",
+        "gt_answer": {
+          "whitelist": "B",
+          "blacklist": null
+        },
+        "data": null,
+        "metric": "string matching",
+        "type": "Instruction Following"
+      }
+    ],
+    "expected_tool_chains": {
+      "multiagent": {
+        "location_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "search_location"
+              }
+            ],
+            [
+              {
+                "name": "search_structured"
+              },
+              {
+                "name": "get_place_details"
+              }
+            ]
+          ]
+        },
+        "data_acquisition_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "list_collections"
+              },
+              {
+                "name": "search_images"
+              },
+              {
+                "name": "download_bands"
+              }
+            ]
+          ]
+        },
+        "main_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "calculate_batch_ndbi"
+              },
+              {
+                "name": "calculate_batch_threshold_ratio"
+              },
+              {
+                "name": "min_value_and_index"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "7": {
+    "tools": [
+      "search_location",
+      "list_collections",
+      "search_images",
+      "download_bands",
+      "calculate_batch_ndbi",
+      "calculate_threshold_ratio",
+      "calculate_batch_threshold_ratio",
+      "division"
+    ],
+    "files": [],
+    "dialogs": [
+      {
+        "role": "user",
+        "content": "Оцените, во сколько раз спутниковый показатель застроенных территорий в Новосибирске в 2023 году выше, чем в 2022 году. Используйте малооблачные сцены, близкие к 2022-05-27 и 2023-06-06; сначала используйте предел облачности 20%."
+      },
+      {
+        "role": "assistant",
+        "thought": "Нужно получить малооблачные спутниковые данные за контрольные даты 2022 и 2023 годов или ближайшие сопоставимые сцены, вычислить подходящий показатель застроенных территорий и сравнить значения отношением 2023 к 2022.",
+        "tool_calls": []
+      }
+    ],
+    "choices": [
+      "Примерно в 1.1 раза",
+      "Примерно в 2.5 раза",
+      "Примерно в 1.35 раза",
+      "Практически одинаково: разница меньше 5%"
+    ],
+    "evaluation": [
+      {
+        "question": "Оцените, во сколько раз спутниковый показатель застроенных территорий в Новосибирске в 2023 году выше, чем в 2022 году. Используйте малооблачные сцены, близкие к 2022-05-27 и 2023-06-06; сначала используйте предел облачности 20%.",
+        "gt_answer": {
+          "whitelist": "C",
+          "blacklist": null
+        },
+        "data": null,
+        "metric": "string matching",
+        "type": "Instruction Following"
+      }
+    ],
+    "expected_tool_chains": {
+      "multiagent": {
+        "location_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "search_location"
+              }
+            ],
+            [
+              {
+                "name": "search_structured"
+              },
+              {
+                "name": "get_place_details"
+              }
+            ]
+          ]
+        },
+        "data_acquisition_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "list_collections"
+              },
+              {
+                "name": "search_images"
+              },
+              {
+                "name": "download_bands"
+              }
+            ]
+          ]
+        },
+        "main_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "calculate_batch_ndbi"
+              },
+              {
+                "name": "calculate_batch_threshold_ratio"
+              },
+              {
+                "name": "division"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "8": {
+    "tools": [
+      "search_location",
+      "list_collections",
+      "search_images",
+      "download_bands",
+      "calculate_batch_ndti",
+      "calc_batch_image_mean",
+      "percentage_change"
+    ],
+    "files": [],
+    "dialogs": [
+      {
+        "role": "user",
+        "content": "Оцените изменение оптического показателя мутности воды у набережной Санкт-Петербурга между 2020 и 2023 годами по малооблачным спутниковым данным. Используйте сцены, близкие к 2020-09-23 и 2023-06-15; сначала используйте предел облачности 20%. Оценивайте именно мутность воды, а не изменение площади водной поверхности."
+      },
+      {
+        "role": "assistant",
+        "thought": "Нужно получить малооблачные спутниковые данные за контрольные даты 2020 и 2023 годов или ближайшие сопоставимые сцены, вычислить подходящий оптический показатель мутности воды и сравнить средние значения; не подменять задачу оценкой площади воды.",
+        "tool_calls": []
+      }
+    ],
+    "choices": [
+      "Оптический показатель мутности в 2023 году существенно выше, примерно в 2.5 раза",
+      "Оптический показатель мутности в 2023 году заметно ниже, примерно на 45-50%",
+      "Изменение менее 1%",
+      "Показатель стал отрицательным"
+    ],
+    "evaluation": [
+      {
+        "question": "Оцените изменение оптического показателя мутности воды у набережной Санкт-Петербурга между 2020 и 2023 годами по малооблачным спутниковым данным. Используйте сцены, близкие к 2020-09-23 и 2023-06-15; сначала используйте предел облачности 20%. Оценивайте именно мутность воды, а не изменение площади водной поверхности.",
+        "gt_answer": {
+          "whitelist": "B",
+          "blacklist": null
+        },
+        "data": null,
+        "metric": "string matching",
+        "type": "Instruction Following"
+      }
+    ],
+    "expected_tool_chains": {
+      "multiagent": {
+        "location_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "search_location"
+              }
+            ],
+            [
+              {
+                "name": "search_structured"
+              },
+              {
+                "name": "get_place_details"
+              }
+            ]
+          ]
+        },
+        "data_acquisition_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "list_collections"
+              },
+              {
+                "name": "search_images"
+              },
+              {
+                "name": "download_bands"
+              }
+            ]
+          ]
+        },
+        "main_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "calculate_batch_ndti"
+              },
+              {
+                "name": "calc_batch_image_mean"
+              },
+              {
+                "name": "percentage_change"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "9": {
+    "tools": [
+      "search_location",
+      "list_collections",
+      "search_images",
+      "download_bands",
+      "calculate_batch_ndvi",
+      "calculate_threshold_ratio",
+      "calculate_batch_threshold_ratio",
+      "difference"
+    ],
+    "files": [],
+    "dialogs": [
+      {
+        "role": "user",
+        "content": "В каком году в Казани выше доля территории с выраженной растительностью по малооблачным спутниковым данным: в 2021 или 2023? Используйте сцены, близкие к 2021-06-03 и 2023-08-17; сначала используйте предел облачности 20%."
+      },
+      {
+        "role": "assistant",
+        "thought": "Нужно получить малооблачные спутниковые данные за контрольные даты 2021 и 2023 годов или ближайшие сопоставимые сцены, вычислить подходящий показатель выраженной растительности и определить, в каком году он выше.",
+        "tool_calls": []
+      }
+    ],
+    "choices": [
+      "В 2023 году, заметно выше: более чем на 5 п.п.",
+      "В 2021 году, немного выше",
+      "Практически одинаково с точной разницей менее 0.05 п.п.",
+      "Оценить нельзя по доступным спутниковым данным"
+    ],
+    "evaluation": [
+      {
+        "question": "В каком году в Казани выше доля территории с выраженной растительностью по малооблачным спутниковым данным: в 2021 или 2023? Используйте сцены, близкие к 2021-06-03 и 2023-08-17; сначала используйте предел облачности 20%.",
+        "gt_answer": {
+          "whitelist": "B",
+          "blacklist": null
+        },
+        "data": null,
+        "metric": "string matching",
+        "type": "Instruction Following"
+      }
+    ],
+    "expected_tool_chains": {
+      "multiagent": {
+        "location_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "search_location"
+              }
+            ],
+            [
+              {
+                "name": "search_structured"
+              },
+              {
+                "name": "get_place_details"
+              }
+            ]
+          ]
+        },
+        "data_acquisition_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "list_collections"
+              },
+              {
+                "name": "search_images"
+              },
+              {
+                "name": "download_bands"
+              }
+            ]
+          ]
+        },
+        "main_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "calculate_batch_ndvi"
+              },
+              {
+                "name": "calculate_batch_threshold_ratio"
+              },
+              {
+                "name": "difference"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "10": {
+    "tools": [
+      "search_location",
+      "list_collections",
+      "search_images",
+      "download_bands",
+      "calculate_batch_ndbi",
+      "calculate_threshold_ratio",
+      "calculate_batch_threshold_ratio",
+      "difference"
+    ],
+    "files": [],
+    "dialogs": [
+      {
+        "role": "user",
+        "content": "Определите направление изменения спутникового показателя застроенных территорий в Новосибирске между 2022 и 2023 годами по малооблачным спутниковым данным. Используйте сцены, близкие к 2022-05-27 и 2023-06-06; сначала используйте предел облачности 20%."
+      },
+      {
+        "role": "assistant",
+        "thought": "Нужно получить малооблачные спутниковые данные за контрольные даты 2022 и 2023 годов или ближайшие сопоставимые сцены, вычислить подходящий показатель застроенных территорий и определить направление изменения.",
+        "tool_calls": []
+      }
+    ],
+    "choices": [
+      "Снижение показателя застроенных территорий",
+      "Изменение отсутствует: значения полностью совпадают",
+      "Рост показателя застроенных территорий в 2023 относительно 2022",
+      "В 2023 году признаки застроенных территорий отсутствуют"
+    ],
+    "evaluation": [
+      {
+        "question": "Определите направление изменения спутникового показателя застроенных территорий в Новосибирске между 2022 и 2023 годами по малооблачным спутниковым данным. Используйте сцены, близкие к 2022-05-27 и 2023-06-06; сначала используйте предел облачности 20%.",
+        "gt_answer": {
+          "whitelist": "C",
+          "blacklist": null
+        },
+        "data": null,
+        "metric": "string matching",
+        "type": "Instruction Following"
+      }
+    ],
+    "expected_tool_chains": {
+      "multiagent": {
+        "location_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "search_location"
+              }
+            ],
+            [
+              {
+                "name": "search_structured"
+              },
+              {
+                "name": "get_place_details"
+              }
+            ]
+          ]
+        },
+        "data_acquisition_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "list_collections"
+              },
+              {
+                "name": "search_images"
+              },
+              {
+                "name": "download_bands"
+              }
+            ]
+          ]
+        },
+        "main_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "calculate_batch_ndbi"
+              },
+              {
+                "name": "calculate_batch_threshold_ratio"
+              },
+              {
+                "name": "difference"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "11": {
+    "tools": [
+      "search_location",
+      "list_collections",
+      "search_images",
+      "download_bands",
+      "calculate_batch_ndvi",
+      "calculate_threshold_ratio",
+      "calculate_batch_threshold_ratio",
+      "difference"
+    ],
+    "files": [],
+    "dialogs": [
+      {
+        "role": "user",
+        "content": "Оцените изменение общей доли растительного покрова в Казани между 2021 и 2023 годами по малооблачным спутниковым данным. Используйте сцены, близкие к 2021-06-03 и 2023-08-17; сначала используйте предел облачности 20%."
+      },
+      {
+        "role": "assistant",
+        "thought": "Нужно получить малооблачные спутниковые данные за контрольные даты 2021 и 2023 годов или ближайшие сопоставимые сцены, вычислить подходящий показатель растительного покрова и оценить изменение общей доли.",
+        "tool_calls": []
+      }
+    ],
+    "choices": [
+      "Заметный рост более чем на 10 п.п.",
+      "Заметное снижение более чем на 10 п.п.",
+      "В 2023 году признаки растительности полностью отсутствуют",
+      "Практически без изменений: в 2023 наблюдается небольшое снижение"
+    ],
+    "evaluation": [
+      {
+        "question": "Оцените изменение общей доли растительного покрова в Казани между 2021 и 2023 годами по малооблачным спутниковым данным. Используйте сцены, близкие к 2021-06-03 и 2023-08-17; сначала используйте предел облачности 20%.",
+        "gt_answer": {
+          "whitelist": "D",
+          "blacklist": null
+        },
+        "data": null,
+        "metric": "string matching",
+        "type": "Instruction Following"
+      }
+    ],
+    "expected_tool_chains": {
+      "multiagent": {
+        "location_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "search_location"
+              }
+            ],
+            [
+              {
+                "name": "search_structured"
+              },
+              {
+                "name": "get_place_details"
+              }
+            ]
+          ]
+        },
+        "data_acquisition_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "list_collections"
+              },
+              {
+                "name": "search_images"
+              },
+              {
+                "name": "download_bands"
+              }
+            ]
+          ]
+        },
+        "main_agent": {
+          "required": true,
+          "any_of": [
+            [
+              {
+                "name": "calculate_batch_ndvi"
+              },
+              {
+                "name": "calculate_batch_threshold_ratio"
+              },
+              {
+                "name": "difference"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  }
+}
