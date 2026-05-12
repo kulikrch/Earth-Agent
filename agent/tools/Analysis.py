@@ -3,9 +3,10 @@ import argparse
 from pathlib import Path
 from fastmcp import FastMCP
 from utils import read_image, read_image_uint8
+from dev_tag import dev_mcp_tool
 
 
-mcp = FastMCP()
+mcp = FastMCP("Analysis")
 parser = argparse.ArgumentParser()
 parser.add_argument('--temp_dir', type=str)
 args, unknown = parser.parse_known_args()
@@ -14,7 +15,7 @@ TEMP_DIR = Path(args.temp_dir)
 TEMP_DIR.mkdir(parents=True, exist_ok=True)
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Description
 
 Computes the linear trend (slope and intercept) of a time series by fitting a line of the form:
@@ -22,6 +23,10 @@ Computes the linear trend (slope and intercept) of a time series by fitting a li
 y = a \\cdot x + b
 
 using the least squares method.
+
+Use only after you have already converted rasters into comparable numeric values
+for each period (for example area share, mean LST, or mean index). The slope unit
+is the unit of y per unit of x; it is not a land-cover class by itself.
 
 Parameters
     • y (list):
@@ -80,11 +85,14 @@ def compute_linear_trend(y: list, x: list|None = None):
     # return list(a), list(b)
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Description:
 Perform the non-parametric Mann-Kendall trend test on a univariate time series. 
 The test evaluates whether there is a monotonic upward or downward trend 
 without requiring the data to conform to any particular distribution.
+
+Use for trend direction/significance across a numeric time series. The input
+values must all represent the same physical measurement and unit.
 
 Parameters:
 - x (list[float]): Input time series values (numeric). Missing values should be removed before calling.
@@ -171,10 +179,10 @@ def mann_kendall_test(x: list):
     return trend, float(p), float(z), float(tau)
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Description:
-Compute Sen’s Slope estimator for a univariate time series. 
-Sen’s Slope is a robust non-parametric method for estimating 
+Compute Sens Slope estimator for a univariate time series. 
+ 
 the median rate of change over time, often used with the 
 Mann-Kendall test to assess both trend and magnitude.
 
@@ -299,7 +307,7 @@ def stl_decompose(
     }
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Description:
 Detect structural change points in a univariate time series using the 
 ruptures library with the PELT algorithm. A change point marks a location 
@@ -479,7 +487,7 @@ def detect_seasonality_acf(values: list, min_acf: float = 0.3):
         return best_lag
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Description:
 Compute the Getis-Ord Gi* statistic for local spatial autocorrelation on a raster image. 
 This method identifies statistically significant spatial clusters of high (hot spots) 
@@ -591,7 +599,7 @@ def getis_ord_gi_star(image_path: str, weight_matrix: list, output_path: str) ->
 
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Description:
 Analyze the main directional concentration of hotspots in a binary hotspot map. 
 The function counts the number of hotspot pixels (value=1) in each cardinal direction 
@@ -735,7 +743,7 @@ def count_spikes_from_values(values, spike_threshold=0.1, verbose=True):
         if diff > spike_threshold:
             spike_count += 1
             if verbose:
-                print(f"Spike detected: {valid_values[i-1]:.4f} -> {valid_values[i]:.4f}, Δ = {diff:.4f}")
+                print(f"Spike detected: {valid_values[i-1]:.4f} -> {valid_values[i]:.4f}, Delta = {diff:.4f}")
 
     if verbose:
         print(f"\nTotal number of spikes detected: {spike_count}")
@@ -744,4 +752,4 @@ def count_spikes_from_values(values, spike_threshold=0.1, verbose=True):
 
 
 if __name__ == "__main__":
-    mcp.run()
+    mcp.run(show_banner=False)

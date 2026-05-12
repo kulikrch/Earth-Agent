@@ -4,9 +4,10 @@ from pathlib import Path
 from fastmcp import FastMCP
 
 from utils import read_image, read_image_uint8
+from dev_tag import dev_mcp_tool
 
 
-mcp = FastMCP()
+mcp = FastMCP("Inversion")
 parser = argparse.ArgumentParser()
 parser.add_argument('--temp_dir', type=str)
 args, unknown = parser.parse_known_args()
@@ -103,16 +104,16 @@ def band_ratio(
 
         profile = src02.profile
 
-    # um
-    λ2, λ5 = 0.865, 1.240
-    λ17, λ18, λ19 = 0.905, 0.936, 0.940
+    # um (wavelengths)
+    wl_2, wl_5 = 0.865, 1.240
+    wl_17, wl_18, wl_19 = 0.905, 0.936, 0.940
 
     # Linear interpolation of window reflectance
-    a = (b05 - b02) / (λ5 - λ2)
-    b = b02 - a * λ2
-    rho17 = a * λ17 + b
-    rho18 = a * λ18 + b
-    rho19 = a * λ19 + b
+    a = (b05 - b02) / (wl_5 - wl_2)
+    b = b02 - a * wl_2
+    rho17 = a * wl_17 + b
+    rho18 = a * wl_18 + b
+    rho19 = a * wl_19 + b
 
     T17 = np.divide(b17, rho17, out=np.zeros_like(b17), where=rho17 != 0)
     T18 = np.divide(b18, rho18, out=np.zeros_like(b18), where=rho18 != 0)
@@ -137,8 +138,13 @@ def band_ratio(
 
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Estimate Land Surface Temperature (LST) using the Single-Channel method, with NDVI-based emissivity estimation from RED and NIR bands.
+
+Use for surface-temperature / heat-island questions when the thermal input is a
+true brightness-temperature band in Kelvin (for example Landsat/HLS Landsat
+thermal). Do not pass Sentinel-2 B10/B11/B12 here: Sentinel-2 has no thermal LST
+band in these collections.
 
 Parameters:
     bt_path (str): Brightness Temperature GeoTIFF (Kelvin).
@@ -228,8 +234,11 @@ def lst_single_channel(
     return f'Result saved at {TEMP_DIR / output_path}'
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Estimate Land Surface Temperature (LST) using the multi-channel algorithm.
+
+Use only with two true thermal infrared bands. This is not a generic two-band
+index and must not be used with optical/SWIR Sentinel-2 bands.
 
 Requires local input files:
 - Two thermal infrared bands (e.g., Band 31 and Band 32) as GeoTIFF files.
@@ -304,8 +313,12 @@ def lst_multi_channel(
     return f'Result saved at {TEMP_DIR / output_path}'
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Estimate Land Surface Temperature (LST) or Precipitable Water Vapor (PWV) using the split-window algorithm.
+
+Use only when both input bands are true thermal channels around 11-12 micrometers
+and matching emissivity rasters are available. Sentinel-2 B11/B12 are SWIR
+reflectance bands, not split-window thermal bands.
 
 Requires local input files:
 - Thermal band 31 (~11 μm) GeoTIFF
@@ -406,13 +419,13 @@ def split_window(
 
     # Calculate temperature difference and emissivity parameters
     delta_T = band31 - band32
-    print(f"Temperature difference ΔT range: {np.nanmin(delta_T):.4f} to {np.nanmax(delta_T):.4f}")
+    print(f"Temperature difference Delta_T range: {np.nanmin(delta_T):.4f} to {np.nanmax(delta_T):.4f}")
 
     eps_mean = (e31 + e32) / 2
     print(f"Mean emissivity range: {np.nanmin(eps_mean):.4f} to {np.nanmax(eps_mean):.4f}")
 
     delta_eps = e31 - e32
-    print(f"Emissivity difference Δε range: {np.nanmin(delta_eps):.4f} to {np.nanmax(delta_eps):.4f}")
+    print(f"Emissivity difference Delta_eps range: {np.nanmin(delta_eps):.4f} to {np.nanmax(delta_eps):.4f}")
 
     eps_mean = np.clip(eps_mean, 0.8, 1.0)
 
@@ -480,7 +493,7 @@ def temperature_emissivity_separation(
     Description:
         Estimate Land Surface Temperature (LST) using the Temperature Emissivity Separation (TES) 
         algorithm with empirical emissivity estimation. Outputs a multi-band raster containing LST, 
-        emissivity, and emissivity variation (Δε).
+        emissivity, and emissivity variation (Delta_eps).
 
     Parameters:
         tir_band_paths (list[str]): List of paths to Thermal Infrared (TIR) GeoTIFFs (e.g., ASTER Bands 10–14).
@@ -490,8 +503,8 @@ def temperature_emissivity_separation(
     Return:
         str: Path to the saved GeoTIFF file containing:
              - Band 1: LST (K)
-             - Band 2: Emissivity (ε)
-             - Band 3: Emissivity variation (Δε)
+             - Band 2: Emissivity (eps)
+             - Band 3: Emissivity variation (Delta_eps)
 
     Example:
         >>> temperature_emissivity_separation(
@@ -525,7 +538,7 @@ def temperature_emissivity_separation(
 
     bands_stack = np.stack(bands_data, axis=0)
 
-    # Step 3: Compute Δε
+    # Step 3: Compute Delta_eps
     masked_stack = np.ma.masked_invalid(bands_stack)
     band_max = np.ma.max(masked_stack, axis=0).filled(np.nan)
     band_min = np.ma.min(masked_stack, axis=0).filled(np.nan)
@@ -552,8 +565,8 @@ def temperature_emissivity_separation(
     with rasterio.open(out_full_path, 'w', **profile) as dst:
         dst.write(out_stack)
         dst.set_band_description(1, "LST (K)")
-        dst.set_band_description(2, "Emissivity (ε)")
-        dst.set_band_description(3, "Emissivity Variation (Δε)")
+        dst.set_band_description(2, "Emissivity (eps)")
+        dst.set_band_description(3, "Emissivity Variation (Delta_eps)")
 
     return f'Result saved at {out_full_path}'
 
@@ -900,10 +913,21 @@ def calculate_mean_lst_by_ndvi(
             continue
 
     if not all_selected_lst:
-        return float('nan')
+        raise ValueError(
+            f"No valid LST data found for NDVI {mode} {ndvi_threshold}. "
+            f"This often happens when RED/NIR bands are incorrect (e.g., using thermal bands B10/B11 instead of RED/NIR). "
+            f"Please verify that red_paths and nir_paths point to actual RED and NIR bands, not thermal bands."
+        )
 
     combined_lst_values = np.concatenate(all_selected_lst)
-    return float(np.nanmean(combined_lst_values))
+    mean_lst = float(np.nanmean(combined_lst_values))
+    
+    if np.isnan(mean_lst):
+        raise ValueError(
+            f"Computed mean LST is NaN. This may indicate invalid input data or all-NaN LST values."
+        )
+    
+    return mean_lst
 
 
 @mcp.tool(description='''
@@ -958,18 +982,33 @@ def calculate_max_lst_by_ndvi(red_path, nir_path, lst_path, ndvi_threshold, mode
         # Apply mask
         selected_lst = lst[mask]
 
+        # Check if we have valid data
+        if selected_lst.size == 0:
+            raise ValueError(
+                f"No valid LST data found for NDVI {mode} {ndvi_threshold}. "
+                f"This often happens when RED/NIR bands are incorrect (e.g., using thermal bands B10/B11 instead of RED/NIR). "
+                f"Please verify that red_path and nir_path point to actual RED and NIR bands, not thermal bands."
+            )
+
         # Compute max ignoring NaNs
         max_lst = np.nanmax(selected_lst)
+        
+        if np.isnan(max_lst):
+            raise ValueError(
+                f"Computed max LST is NaN. This may indicate invalid input data or all-NaN LST values."
+            )
 
         return float(max_lst)
 
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Estimate Apparent Thermal Inertia (ATI) using the Thermal Inertia Method.
 
 This method calculates ATI as (1 - albedo) / (day_temp - night_temp),
 which serves as a proxy for land surface temperature stability over diurnal cycles.
+It is not a direct LST value in Celsius/Kelvin and should not be used to answer a
+question asking for surface-temperature difference unless ATI is explicitly requested.
 
 Parameters:
     day_temp_path (str): File path to daytime brightness temperature GeoTIFF.
@@ -1097,7 +1136,7 @@ def ATI(
 
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Dual-Polarization Differential Method (DPDM) for microwave remote sensing parameter inversion.
 
 Supports soil moisture and vegetation index estimation with improved data handling and flexible parameters.
@@ -1194,7 +1233,7 @@ def dual_polarization_differential(
 
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Dual-frequency Differential Method (DDM) for parameter inversion using local raster data.
 
 Supports inversion of multiple parameters via empirical linear models:
@@ -1303,7 +1342,7 @@ def dual_frequency_diff(
     return f'Result saved at {TEMP_DIR / output_path}'
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Multi-frequency Brightness Temperature Method for parameter inversion using local raster data.
 
 Parameters:
@@ -1420,7 +1459,7 @@ def multi_freq_bt(
 
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Chang algorithm for inversion of a single parameter using multi-frequency dual-polarized microwave brightness temperatures from local raster files.
 
 Parameters:
@@ -1630,7 +1669,7 @@ def nasa_team_sea_ice_concentration(
 
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Estimate Vegetation Water Content (VWC) or Soil Moisture (SM) using Dual-Polarization Ratio Method (PRM) from local passive microwave brightness temperature GeoTIFF files.
 
 The polarization ratio is computed as: (V - H) / (V + H), where V and H are brightness temperatures of vertical and horizontal polarizations.
@@ -1734,9 +1773,19 @@ def dual_polarization_ratio(
         raise RuntimeError(f"Error processing dual polarization ratio parameter: {e}")
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Calculate water turbidity in NTU (Nephelometric Turbidity Units) from red band raster file
 and save the result to a specified output path.
+
+Use this when the user asks for water turbidity, optical turbidity, suspended
+matter proxy, or water-quality brightness proxy. The input should be a visible
+reflectance band raster, preferably Red. Do not substitute NDWI/NDWI area share:
+NDWI estimates water presence/extent, not turbidity. After creating turbidity
+rasters for multiple dates, use calc_batch_image_mean to compare mean turbidity.
+
+If the available files are only Green + NIR for water extent, they are not the
+right primary inputs for this tool. The data acquisition step should provide a
+visible turbidity band, normally Red, before calling this function.
 
 Parameters:
     input_red_path (str): Path to the Red band raster file.
@@ -1824,4 +1873,4 @@ def calculate_water_turbidity_ntu(
 
 
 if __name__ == "__main__":
-    mcp.run() 
+    mcp.run(show_banner=False)

@@ -39,6 +39,20 @@
                 "--temp_dir",
                 "tmp/tmp/out"
             ]
+        },
+        "grabosm-osm-mcp": {
+            "command": "node",
+            "args": [
+                "${OSM_MCP_PATH}"
+            ]
+        },
+        "EarthEngine": {
+            "command": "python",
+            "args": [
+                "tools/EarthEngine.py",
+                "--temp_dir",
+                "tmp/tmp/out"
+            ]
         }
     },
     "models": [

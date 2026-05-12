@@ -4,8 +4,9 @@ from pathlib import Path
 from fastmcp import FastMCP
 
 from utils import read_image, read_image_uint8
+from dev_tag import dev_mcp_tool
 
-mcp = FastMCP()
+mcp = FastMCP("Statistics")
 parser = argparse.ArgumentParser()
 parser.add_argument('--temp_dir', type=str)
 args, unknown = parser.parse_known_args()
@@ -227,8 +228,24 @@ def calc_single_image_mean(file_path: str, uint8: bool = False) -> float:
 
     return float(np.nanmean(flat))
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Compute mean value of an batch of images.
+
+Use for continuous raster values (for example LST, reflectance, NDVI/NDBI value).
+Do NOT use mean value as a substitute for area/share. If the question asks for a
+percentage of territory or pixels, first create a suitable index/mask and use a
+threshold/count ratio tool.
+
+Typical uses:
+    - mean LST / mean temperature raster comparison;
+    - mean NDVI when the question asks for vegetation condition/intensity;
+    - mean turbidity raster after calculate_water_turbidity_ntu.
+
+Not for:
+    - "доля территории", "площадь", "процент пикселей" questions;
+    - choosing a built-up area share from a raw band or mean NDBI alone.
+    - final multiple-choice decisions when the choices are formulated as
+      area/share thresholds or percentage-point changes.
 
 Args:
     file_list (list): List of image file paths.
@@ -432,7 +449,7 @@ def calc_single_image_max(file_path: str, uint8: bool = False) -> float:
 
     return float(np.nanmax(flat))
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Description:
 Compute the maximum pixel value for a batch of images.
 
@@ -678,7 +695,7 @@ def calc_single_image_hotspot_percentage(file_path: str, threshold: float, uint8
     return float(hotspot_percentage)
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Description:
 Compute the hotspot percentage (fraction of pixels above a threshold) for a batch of images.
 
@@ -1204,11 +1221,79 @@ def mean(x: list):
     return float(np.mean(x))
 
 
-@mcp.tool(description=
+def _calculate_threshold_ratio_impl(
+    image_paths: str | list[str],
+    threshold: float = 0.75,
+    mode: str = 'above',
+    band_index: int = 0
+) -> float:
+    """Internal implementation shared by threshold-ratio MCP tools."""
+    import numpy as np
+    if isinstance(image_paths, str):
+        image_paths = [image_paths]
+
+    ratios = []
+    for image_path in image_paths:
+        img = read_image(image_path)
+        # Handle multi-band images
+        if img.ndim == 3:
+            # Assume (bands, height, width) or (height, width, bands)
+            if img.shape[0] <= 5 and img.shape[0] < img.shape[-1]:  # bands likely first
+                band = img[band_index]
+            else:  # bands likely last
+                band = img[..., band_index]
+        else:
+            band = img
+
+        valid_pixels = ~np.isnan(band)
+        total_valid_pixels = np.sum(valid_pixels)
+        if total_valid_pixels == 0:
+            ratios.append(0.0)
+            continue
+
+        # Apply threshold comparison based on mode
+        if mode == 'above':
+            matching_pixels = np.sum((band > threshold) & valid_pixels)
+        elif mode == 'below':
+            matching_pixels = np.sum((band < threshold) & valid_pixels)
+        elif mode == 'equal':
+            matching_pixels = np.sum((band == threshold) & valid_pixels)
+        elif mode == 'above_equal':
+            matching_pixels = np.sum((band >= threshold) & valid_pixels)
+        elif mode == 'below_equal':
+            matching_pixels = np.sum((band <= threshold) & valid_pixels)
+        else:
+            raise ValueError(f"Invalid mode '{mode}'. Must be one of: 'above', 'below', 'equal', 'above_equal', 'below_equal'")
+
+        percentage = (matching_pixels / total_valid_pixels) * 100
+        ratios.append(float(percentage))
+
+    return float(np.mean(ratios)) if ratios else 0.0
+
+
+@dev_mcp_tool(mcp, description=
     """
     Description:
         Calculate the average percentage of pixels relative to a given threshold for
         one or more images and a specified band.
+
+        Use when the requested unit is percent_of_area / share of pixels. The
+        input should normally be a derived index, mask, or LST raster whose
+        threshold has physical meaning. For built-up area/share, first calculate
+        NDBI from SWIR+NIR and then apply this tool to the NDBI raster. For
+        vegetation area/share, first calculate NDVI/EVI. Do NOT apply this
+        directly to raw Red/NIR/SWIR bands to infer land-cover area unless the
+        question explicitly defines a raw-band threshold.
+
+        If the question asks "which year has the minimum/maximum share", call
+        this tool once per derived raster (or with a list and preserve order),
+        then compare the returned percentages with min_value_and_index or
+        max_value_and_index. Do not compare mean index values when the target is
+        an area/share.
+
+        The return value is a percentage from 0 to 100. When comparing years,
+        distinguish percentage points (value_2 - value_1) from relative percent
+        change ((value_2 - value_1) / value_1 * 100).
 
     Parameters:
         image_paths (str or list[str]):
@@ -1299,6 +1384,65 @@ def calculate_threshold_ratio(image_paths: str | list[str], threshold: float = 0
         ratios.append(float(percentage))
 
     return float(np.mean(ratios)) if ratios else 0.0
+
+
+@dev_mcp_tool(mcp, description=
+    """
+    Description:
+        Calculate threshold percentages separately for each input image.
+
+        Use this for multi-period comparisons where each image corresponds to a
+        year/date/period and the answer depends on per-period shares. Unlike
+        calculate_threshold_ratio, this tool does NOT average values across the
+        image list; it returns one percentage per input image in the same order.
+
+        Typical workflow:
+            1. Create index rasters, e.g. NDBI for built-up share or NDVI for
+               vegetation share.
+            2. Call calculate_batch_threshold_ratio on the index raster list.
+            3. Compare the returned list with min_value_and_index,
+               max_value_and_index, difference, division, or percentage_change.
+
+        Use this instead of calculate_threshold_ratio when the question asks:
+            - which year has the minimum/maximum share;
+            - whether a share increases/decreases over several periods;
+            - how many times one year's area/share is higher than another.
+
+    Parameters:
+        image_paths (list[str]):
+            List of image file paths. Output order matches this list exactly.
+        threshold (float, optional):
+            Threshold value. Default = 0.75.
+        mode (str, optional):
+            Comparison mode: 'above' (>), 'below' (<), 'equal' (==),
+            'above_equal' (>=), 'below_equal' (<=). Default = 'above'.
+        band_index (int, optional):
+            Band index to use (0-based). Default = 0 (first band).
+
+    Returns:
+        list[float]:
+            Percentages from 0 to 100, one per input image.
+
+    Example:
+        >>> calculate_batch_threshold_ratio(["ndbi_2021.tif", "ndbi_2022.tif"], threshold=0, mode="above")
+        [12.03, 15.86]
+    """)
+def calculate_batch_threshold_ratio(
+    image_paths: list[str],
+    threshold: float = 0.75,
+    mode: str = 'above',
+    band_index: int = 0
+) -> list[float]:
+    """
+    Calculate threshold percentage separately for each image.
+    """
+    if isinstance(image_paths, str):
+        image_paths = [image_paths]
+
+    return [
+        float(_calculate_threshold_ratio_impl(image_path, threshold=threshold, mode=mode, band_index=band_index))
+        for image_path in image_paths
+    ]
 
 
 def calc_single_image_fire_pixels(file_path: str, fire_threshold: float = 0) -> int:
@@ -1665,7 +1809,7 @@ def image_division_mean(image_path1, image_path2=None, band1=1, band2=2):
 
 
 
-@mcp.tool(description=
+@dev_mcp_tool(mcp, description=
     """
     Description:
         Calculate the percentage of pixels that simultaneously satisfy 
@@ -1759,6 +1903,10 @@ def calculate_intersection_percentage(path1, threshold1, path2, threshold2):
     Description:
         Compute the average of mean pixel values across a batch of images.
 
+        This summarizes continuous raster values. It is not an area/share
+        metric. For questions about percentage of territory or pixels, use an
+        index/mask followed by a threshold/count ratio instead.
+
     Parameters:
         file_list (list[str]):
             List of image file paths.
@@ -1801,6 +1949,9 @@ def calc_batch_image_mean_mean(file_list: list[str], uint8: bool = False) -> flo
     """
     Description:
         Compute the mean pixel values of a batch of images and return the maximum mean.
+
+        This is for continuous-value extrema across images. It does not measure
+        land-cover area/share.
 
     Parameters:
         file_list (list[str]):
@@ -1848,6 +1999,9 @@ def calc_batch_image_mean_max(file_list: list[str], uint8: bool = False) -> floa
         - Mean of mean values
         - Maximum of maximum values
         - Minimum of minimum values
+
+        Use for continuous raster summaries such as temperature or index values.
+        Do not use these statistics as a substitute for percent_of_area.
 
     Parameters:
         file_list (list[str]):
@@ -1913,6 +2067,10 @@ def calc_batch_image_mean_max_min(file_list: list[str], uint8: bool = False) -> 
     Description:
         Calculate the percentage or count of images whose mean pixel values 
         (in a specified band) are above or below a given threshold.
+
+        This threshold is applied to image means, not to pixels. Use it for
+        time-series image-level filtering, not for spatial area/share inside an
+        image.
 
     Parameters:
         file_list (list[str]):
@@ -2023,10 +2181,13 @@ def calc_batch_image_mean_threshold(
         raise ValueError("return_type must be 'ratio' or 'count'")
 
 
-@mcp.tool(description=
-    """
+@dev_mcp_tool(mcp, description=    """
     Description:
         Calculate the percentage of pixels that simultaneously satisfy multiple band threshold conditions.
+
+        Use only when each threshold condition has a clear physical meaning.
+        For built-up area/share, prefer NDBI from SWIR+NIR and then threshold
+        the NDBI raster, rather than arbitrary raw-band thresholds.
 
     Parameters:
         image_path (str):
@@ -2114,6 +2275,10 @@ def calculate_multi_band_threshold_ratio(
     Description:
         Count the number of pixels that simultaneously satisfy multiple band threshold conditions.
 
+        Use when the requested unit is count, or when count will be explicitly
+        converted to area/share. Avoid arbitrary raw-band conditions for land
+        cover classes when an index tool exists.
+
     Parameters:
         image_path (str):
             Path to the multi-band image file.
@@ -2192,9 +2357,8 @@ def count_pixels_satisfying_conditions(
     return int(np.sum(combined_mask))
 
 
-@mcp.tool(description=
-    """
-    Count how many images have a percentage of pixels above or below a threshold 
+@dev_mcp_tool(mcp, description="""
+Count how many images have a percentage of pixels above or below a threshold 
     that exceeds a specified ratio.
 
     Parameters:
@@ -2223,7 +2387,7 @@ def count_pixels_satisfying_conditions(
         ...     mode="above"
         ... )
         1
-    """)
+""")
 def count_images_exceeding_threshold_ratio(
     image_paths: str | list[str],
     value_threshold: float = 0.7,
@@ -2986,7 +3150,7 @@ def subtract(img1_path: str, img2_path: str, output_path: str) -> str:
     return f'Result save at {TEMP_DIR / output_path}'
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Description:
 This function calculates the area of non-zero pixels in the input image and returns the result.
 
@@ -3078,8 +3242,12 @@ def grayscale_to_colormap(image_path: str, save_name: str, cmap_name: str = 'vir
     return f'Result save at {save_path}'
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Returns a list of files in the specified directory.
+
+Use this before local analysis when available files are uncertain. Subsequent
+tools must use exact returned paths/file names; do not invent paths such as
+"question3/ndbi_2023.tif" unless they are listed or were returned by a tool.
 
 Parameters:
     dir_path (str): Path to the directory.
@@ -3102,15 +3270,15 @@ def get_filelist(dir_path: str):
 
 
 
-@mcp.tool(description="""
-Apply Landsat 8 surface reflectance (SR_B*) radiometric correction.
+@dev_mcp_tool(mcp, description="""
+Radiometric correction for surface reflectance band.
 
 Parameters:
-    input_band_path (str): Path to the input reflectance band file.
-    output_path (str): relative path for the output raster file, e.g. "question17/radiometric_correction_2022-01-16.tif"
+    input_band_path (str): Path to input SR band.
+    output_path (str): Relative path for output.
 
 Returns:
-    str: Path to the saved corrected reflectance file.
+    str: Path to saved file.
 """)
 def radiometric_correction_sr(input_band_path, output_path):
     """
@@ -3154,16 +3322,16 @@ def radiometric_correction_sr(input_band_path, output_path):
 
 
 
-@mcp.tool(description="""
-Apply cloud/shadow mask to a single Landsat 8 surface reflectance band using QA_PIXEL band.
+@dev_mcp_tool(mcp, description="""
+Apply cloud/shadow mask to SR band using QA_PIXEL.
 
 Parameters:
-    sr_band_path (str): Path to surface reflectance band (e.g., SR_B3 or SR_B5).
-    qa_pixel_path (str): Path to QA_PIXEL band.
-    output_path (str): relative path for the output raster file, e.g. "question17/cloud_mask_2022-01-16.tif"
+    sr_band_path (str): Path to SR band.
+    qa_pixel_path (str): Path to QA_PIXEL.
+    output_path (str): Relative path for output.
 
 Returns:
-    str: Path to the saved masked raster file.
+    str: Path to saved masked file.
 """)
 def apply_cloud_mask(sr_band_path, qa_pixel_path, output_path):
     """
@@ -3212,4 +3380,4 @@ def apply_cloud_mask(sr_band_path, qa_pixel_path, output_path):
 
 
 if __name__ == "__main__":
-    mcp.run()
+    mcp.run(show_banner=False)

@@ -4,6 +4,7 @@ from pathlib import Path
 from fastmcp import FastMCP
 
 from utils import read_image, read_image_uint8
+from dev_tag import dev_mcp_tool
 
 
 mcp = FastMCP()
@@ -15,13 +16,18 @@ TEMP_DIR = Path(args.temp_dir)
 TEMP_DIR.mkdir(parents=True, exist_ok=True)
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Perform threshold-based segmentation on a single-band raster image.
 
 The function reads a raster image from the specified path, converts it to a binary mask
 by applying a fixed threshold, and writes the resulting binary image to a new file.
 Pixel values greater than the threshold are set to 255 (white), and values less than or
 equal to the threshold are set to 0 (black).
+
+Use this only after choosing a raster whose values have the intended physical
+meaning, for example NDVI for vegetation, NDBI for built-up territory, or LST for
+temperature. Do not segment raw Red/NIR/SWIR bands as land-cover classes unless
+the question explicitly defines that raw-band threshold.
 
 Parameters:
     input_image_path (str): Path to the input raster image file (e.g., TIFF, PNG, JPG).
@@ -108,6 +114,10 @@ def bbox_expansion(bboxes: list[list[float]], radius: float, gsd: float):
     Description:
         Count the number of pixels in an image whose values are greater than 
         the specified threshold.
+
+        Use this on a derived index/mask/LST raster when counting pixels has the
+        same meaning as the requested metric. For area/share tasks, prefer
+        calculate_threshold_ratio if a percentage is needed.
 
     Parameters:
         file_path (str):
@@ -324,30 +334,16 @@ def centroid_distance_extremes(centroids):
 
 
 
-@mcp.tool(description="""
-    Description:
-        Calculate the total area of a list of bounding boxes in [x, y, w, h] format.
+@dev_mcp_tool(mcp, description="""
+Calculate the total area of a list of bounding boxes in [x, y, w, h] format.
 
-    Parameters:
-        bboxes (list[list[float]]):
-            A list of bounding boxes, where each box is defined as [x, y, w, h].
-            - x, y → top-left corner coordinates
-            - w, h → width and height of the box
-        gsd (float, optional):
-            Ground sample distance (meters per pixel). 
-            - If provided, the result is in square meters (m²).
-            - If None, the result is in square pixels (pixel²). Default = None.
+Parameters:
+    bboxes (list[list[float]]): List of bounding boxes in [x, y, w, h].
+    gsd (float, optional): Ground sample distance (meters per pixel). If provided, area is in m².
 
-    Returns:
-        total_area (float):
-            The total area of all bounding boxes, in m² if gsd is provided, otherwise in pixel².
-
-    Example:
-        >>> calculate_bbox_area([[0, 0, 10, 20], [5, 5, 15, 10]])
-        350.0
-        >>> calculate_bbox_area([[0, 0, 10, 20]], gsd=0.5)
-        50.0
-    """)
+Returns:
+    float: Total area.
+""")
 def calculate_bbox_area(bboxes, gsd=None):
     """
     Description:
@@ -385,11 +381,53 @@ def calculate_bbox_area(bboxes, gsd=None):
         total_area *= gsd * gsd
     
     return total_area
-   
+
+
+@dev_mcp_tool(mcp, description="""
+Count connected components in a binary mask image.
+
+This is useful after `threshold_segmentation` (or any other method that produces a binary mask)
+when you want to count distinct objects (e.g., buildings/patches) in an AOI.
+
+Parameters:
+    mask_path (str): Path to a binary mask raster (0 background, >0 foreground).
+    connectivity (int, optional): Pixel connectivity, 4 or 8. Default = 8.
+
+Returns:
+    int: Number of connected components (foreground objects).
+""")
+def count_connected_components(mask_path: str, connectivity: int = 8) -> int:
+    import numpy as np
+    from skimage.measure import label
+
+    img = read_image(mask_path)
+    if img.ndim == 3:
+        # take first band if multi-band
+        img = img[..., 0] if img.shape[-1] > 1 else img[0]
+
+    # Treat NaN as background
+    img = np.where(np.isnan(img), 0, img)
+    fg = img > 0
+
+    conn = 2 if connectivity == 8 else 1
+    labeled = label(fg.astype(np.uint8), connectivity=conn)
+
+    # labels start at 1, 0 is background
+    return int(labeled.max())
+
+
 def get_model_output(model_name: str, input_image_path: str, **args):
     import pandas as pd
-
-    results = pd.read_csv('/root/autodl-tmp/Earth-Agent/benchmark/model_results.csv', sep=';')
+    import os
+    from pathlib import Path
+    
+    # Use relative path from current working directory (project root)
+    csv_path = Path('benchmark/model_results.csv')
+    if not csv_path.exists():
+        # Try absolute path construction from this file's location
+        csv_path = Path(__file__).parent.parent.parent / 'benchmark' / 'model_results.csv'
+    
+    results = pd.read_csv(csv_path, sep=';')
     result = None
     try:
         # classification
@@ -420,7 +458,7 @@ def get_model_output(model_name: str, input_image_path: str, **args):
 
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 MSCN is a scene and land-use image classifier, effective for categories such as 
 Airport, BareLand, BaseballField, Beach, Bridge, Center, Church, Commercial, 
 DenseResidential, Desert, Farmland, Forest, Industrial, Meadow, MediumResidential, 
@@ -452,7 +490,7 @@ def MSCN(input_image_path):
     return get_model_output('MSCN', input_image_path)
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 RemoteCLIP is a scene and land-use image classifier, specialized for categories such as 
 Airport, Beach, Bridge, Commercial, Desert, Farmland, FootballField, Forest, Industrial, 
 Meadow, Mountain, Park, Parking, Pond, Port, RailwayStation, Residential, River, and Viaduct.
@@ -483,7 +521,7 @@ def RemoteCLIP(input_image_path):
 
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Strip_R_CNN is a remote sensing object detection model with a strong focus on 
 maritime and ship-related targets. Compared to SM3Det, it is particularly 
 specialized in detecting and localizing different types of ships and naval vessels.
@@ -532,7 +570,7 @@ def Strip_R_CNN(input_image_path, text_prompt):
     return get_model_output('Strip-R-CNN', input_image_path, text_prompt=text_prompt)
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 SM3Det is a remote sensing object detection model. 
 Given an input image and a natural language prompt specifying the target object 
 (e.g., "plane", "ship", "storage tank"), it detects all instances of that object 
@@ -584,7 +622,7 @@ Output:
 def SM3Det(input_image_path, text_prompt):
     return get_model_output('SM3Det', input_image_path, text_prompt=text_prompt)
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 RemoteSAM is a remote sensing visual grounding model. Given an input image and a text prompt 
 describing a region of interest (e.g., "the football field located on the westernmost side"), 
 it outputs the corresponding bounding box coordinates.
@@ -608,7 +646,7 @@ def RemoteSAM(input_image_path, text_prompt):
     return get_model_output('RemoteSAM', input_image_path, text_prompt=text_prompt)
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 InstructSAM is an instruction-guided counting model for remote sensing images. 
 Given an input image and a natural language prompt specifying the target object 
 (e.g., "storage tank", "football field"), it detects and counts the number of 
@@ -647,7 +685,7 @@ def SAM2(input_image_path, bbox, output_path):
     return get_model_output('SAM2', input_image_path, bbox=bbox, output_path=output_path)
 
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
     Use ChangeOS to detect the change between two images and return the change mask.
     Can also be used to segment building by providing same image path in pre_image_path and post_image_path.
 

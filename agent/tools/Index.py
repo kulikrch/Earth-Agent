@@ -4,8 +4,9 @@ from pathlib import Path
 from fastmcp import FastMCP
 
 from utils import read_image, read_image_uint8
+from dev_tag import dev_mcp_tool
 
-mcp = FastMCP()
+mcp = FastMCP("Index")
 parser = argparse.ArgumentParser()
 parser.add_argument('--temp_dir', type=str)
 args, unknown = parser.parse_known_args()
@@ -64,8 +65,16 @@ def calculate_ndvi(input_nir_path, input_red_path, output_path):
     
     return f'Result save at {TEMP_DIR / output_path}'
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Batch-calculate NDVI from multiple pairs of NIR/Red raster files and save results.
+
+Use for vegetation proxy and vegetation area/share tasks. Correct workflow for
+area/share: first create NDVI rasters with this tool, then apply a threshold
+tool to the resulting NDVI rasters. Do not use NDVI as a built-up proxy.
+
+This tool creates intermediate index rasters. It does not by itself answer
+questions about percentage of area; use a statistics/threshold tool afterward
+when the question asks for a share or area.
 
 Parameters:
     input_nir_paths (list[str]): Paths to Near-Infrared (NIR) band raster files.
@@ -148,8 +157,14 @@ def calculate_ndwi(input_nir_path, input_swir_path, output_path):
     
     return f'Result save at {TEMP_DIR / output_path}'
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Batch-calculate NDWI from multiple pairs of NIR/SWIR raster files and save results.
+
+Use this tool only when the intended water/moisture proxy matches this
+implementation: NDWI = (NIR - SWIR) / (NIR + SWIR). For area/share questions,
+create the index first and then calculate a threshold ratio on the index raster;
+do not threshold raw NIR or SWIR bands as water area unless the question
+explicitly defines that raw-band rule.
 
 Parameters:
     input_nir_paths (list[str]): Paths to Near-Infrared (NIR) band raster files.
@@ -211,6 +226,36 @@ def calculate_ndbi(input_swir_path, input_nir_path, output_path):
     swir_band = np.array(swir_band, dtype=np.float32)
     nir_band = np.array(nir_band, dtype=np.float32)
 
+    # Handle shape mismatch (e.g., Sentinel-2 B11 20m vs B8 10m) by aligning to a common grid.
+    # Avoid SciPy import inside MCP worker thread to prevent rare deadlocks on Windows.
+    if swir_band.shape != nir_band.shape:
+        def _resize_to_target(arr: np.ndarray, target_h: int, target_w: int) -> np.ndarray:
+            """Fast nearest-neighbor resize without SciPy dependency."""
+            if arr.shape == (target_h, target_w):
+                return arr
+            scale_h = arr.shape[0] / target_h
+            scale_w = arr.shape[1] / target_w
+            round_h = int(round(scale_h))
+            round_w = int(round(scale_w))
+
+            # Fast path for common 2x/3x/... integer ratios.
+            if (
+                round_h >= 1 and round_w >= 1
+                and abs(scale_h - round_h) < 1e-6
+                and abs(scale_w - round_w) < 1e-6
+            ):
+                return arr[::round_h, ::round_w][:target_h, :target_w]
+
+            # Fallback for non-integer scale ratios (nearest neighbor indexing).
+            row_idx = np.linspace(0, arr.shape[0] - 1, target_h).astype(np.int32)
+            col_idx = np.linspace(0, arr.shape[1] - 1, target_w).astype(np.int32)
+            return arr[row_idx[:, None], col_idx[None, :]]
+
+        target_height = min(swir_band.shape[0], nir_band.shape[0])
+        target_width = min(swir_band.shape[1], nir_band.shape[1])
+        swir_band = _resize_to_target(swir_band, target_height, target_width)
+        nir_band = _resize_to_target(nir_band, target_height, target_width)
+
     # Prevent division by zero by adding a small offset (e.g., 1e-6)
     denominator = swir_band + nir_band + 1e-6
 
@@ -222,7 +267,9 @@ def calculate_ndbi(input_swir_path, input_nir_path, output_path):
     ndbi_profile.update(
         dtype=rasterio.float32,  # NDBI values are floating-point numbers
         nodata=-9999,  # Set a NoData value
-        compress='lzw'  # Optional: compress the output file
+        compress='lzw',  # Optional: compress the output file
+        height=ndbi.shape[0],
+        width=ndbi.shape[1]
     )
 
     # Save the NDBI result to the specified output path
@@ -232,8 +279,17 @@ def calculate_ndbi(input_swir_path, input_nir_path, output_path):
 
     return f'Result save at {TEMP_DIR / output_path}'
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Batch-calculate NDBI from multiple pairs of SWIR/NIR raster files and save results.
+
+Use for built-up territory proxy and built-up area/share tasks. Correct workflow:
+download SWIR and NIR for each period, create NDBI rasters with this tool, then
+calculate the share of pixels above the chosen built-up threshold. Do not replace
+this with Red+NIR, NDVI, or direct thresholding of raw Red/NIR/SWIR bands.
+
+For "minimum year", "increase/decrease", or "how many times higher" questions
+about built-up territories, compare the derived area/share values after
+thresholding, not just raw mean NDBI values.
 
 Parameters:
     input_swir_paths (list[str]): Paths to Short-Wave Infrared (SWIR) band raster files.
@@ -325,6 +381,10 @@ def  calculate_evi(input_nir_path, input_red_path, input_blue_path, output_path,
 
 @mcp.tool(description="""
 Batch-calculate EVI from multiple sets of NIR/Red/Blue raster files and save results.
+
+Use for vegetation condition when NDVI may saturate. For vegetation area/share,
+threshold the resulting EVI raster if the threshold is justified. Do not use EVI
+for built-up or thermal questions.
 
 Parameters:
     input_nir_paths (list[str]): Paths to Near-Infrared (NIR) band raster files.
@@ -419,8 +479,11 @@ def calculate_nbr(input_nir_path, input_swir_path, output_path):
 
     return f'Result save at {TEMP_DIR / output_path}'
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Batch-calculate NBR from multiple pairs of NIR/SWIR raster files and save results.
+
+Use for burn severity or fire impact analysis. Do not use NBR as a generic
+vegetation, water, built-up, or temperature proxy.
 
 Parameters:
     input_nir_paths (list[str]): Paths to Near-Infrared (NIR) band raster files.
@@ -513,8 +576,11 @@ def calculate_fvc(input_nir_path, input_red_path, output_path, ndvi_min=0.1, ndv
 
     return f'Result save at {TEMP_DIR / output_path}'
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Batch-calculate FVC from multiple pairs of NIR/Red raster files and save results.
+
+Use when the requested measurement is vegetation cover fraction. Do not use FVC
+as a proxy for built-up area, water area, or surface temperature.
 
 Parameters:
     input_nir_paths (list[str]): Paths to Near-Infrared (NIR) band raster files.
@@ -710,7 +776,14 @@ def calculate_ndti(input_red_path, input_green_path, output_path):
     return f'Result save at {TEMP_DIR / output_path}'
 
 @mcp.tool(description="""
-Batch-calculate NDTI from multiple pairs of Red/Green raster files and save results.
+Batch-calculate NDTI (Normalized Difference Turbidity Index) from multiple pairs
+of Red/Green raster files and save results.
+
+Use for turbidity-index questions when the intended method is an index based on
+visible Red and Green reflectance. This is different from water-area detection:
+do not use NDWI as a substitute for turbidity, and do not use NDTI for vegetation
+or built-up questions. If the question asks for NTU-like turbidity instead of an
+index, use calculate_water_turbidity_ntu.
 
 Parameters:
     input_red_paths (list[str]): Paths to Red band raster files.
@@ -790,7 +863,7 @@ def calculate_frp(input_frp_path, output_path, fire_threshold=0):
 
     return f'Result save at {TEMP_DIR / output_path}'
 
-@mcp.tool(description="""
+@dev_mcp_tool(mcp, description="""
 Batch-calculate Fire Radiative Power (FRP) masks from multiple raster files and save results.
 
 Parameters:
@@ -1011,7 +1084,7 @@ def calc_extreme_snow_loss_percentage_from_binary_map(binary_map_path: str) -> f
     return float(extreme_loss_percentage)
 
 
-@mcp.tool(description='''
+@dev_mcp_tool(mcp, description='''
 Compute TVDI (Temperature Vegetation Dryness Index) using NDVI and LST from local raster files.
 
 Parameters:
@@ -1139,4 +1212,4 @@ def compute_tvdi(
 
 
 if __name__ == "__main__":
-    mcp.run() 
+    mcp.run(show_banner=False)

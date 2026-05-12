@@ -24,6 +24,14 @@
                 "tmp/tmp/out"
             ]
         },
+        "Perception": {
+            "command": "python",
+            "args": [
+                "tools/Perception.py",
+                "--temp_dir",
+                "tmp/tmp/out"
+            ]
+        },
         "Statistics": {
             "command": "python",
             "args": [
@@ -31,16 +39,22 @@
                 "--temp_dir",
                 "tmp/tmp/out"
             ]
+        },
+        "grabosm-osm-mcp": {
+            "command": "node",
+            "args": [
+                "${OSM_MCP_PATH}"
+            ]
         }
     },
     "models": [
         {
-            "config_name": "gpt-4o",
+            "config_name": "gpt-5",
             "model_type": "openai_chat",
-            "model_name": "gpt-4o",
-            "api_key": "",
+            "model_name": "gpt-5",
+            "api_key": "${OPENAI_API_KEY}",
             "client_args": {
-                "base_url": ""
+                "base_url": "${OPENAI_BASE_URL}"
             },
             "generate_args": {}
         }
