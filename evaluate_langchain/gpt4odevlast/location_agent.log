@@ -1,0 +1,292 @@
+2026-05-12 00:02:48,005 - INFO - 🗺️ Location Agent: Starting search for 'Скандинавский бульвар, 6, поселение Сосенское, Коммунарка, Москва'
+2026-05-12 00:02:48,005 - INFO -    💡 Reason: Для получения спутниковых снимков района застройки
+2026-05-12 00:02:48,005 - INFO -    📝 Context: Анализ теплового контраста между застройкой и зелеными зонами
+2026-05-12 00:02:48,005 - INFO - 🤖 Invoking ReAct agent (max_iterations=30)
+2026-05-12 00:03:16,698 - INFO - 📊 Tool result (search_structured): {
+  "results": [
+    {
+      "place_id": 193469978,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 1434045251,
+     ...
+2026-05-12 00:03:16,698 - INFO - 📊 Tool result (search_location): {
+  "results": [],
+  "count": 0,
+  "query": "Скандинавский бульвар, 6, поселение Сосенское, Коммунарка, Москва"
+}...
+2026-05-12 00:03:16,698 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 194240204,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 6560279948,
+    ...
+2026-05-12 00:03:16,698 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 181818375,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 12510710,
+  ...
+2026-05-12 00:03:16,698 - INFO - 💭 Agent thinking: ```json
+{
+  "found": true,
+  "lat": 55.5662578,
+  "lon": 37.4964502,
+  "bbox": [37.4953727, 55.5652741, 37.4981232, 55.5666424],
+  "display_name": "6, Скандинавский бульвар, Скандинавия, район Коммуна...
+2026-05-12 00:03:16,698 - INFO - ✅ Location found: lat=55.5662578, lon=37.4964502
+2026-05-12 00:03:16,698 - INFO - 📍 BBox: [37.4953727, 55.5652741, 37.4981232, 55.5666424]
+2026-05-12 00:03:16,698 - INFO - 🏷️ Display name: 6, Скандинавский бульвар, Скандинавия, район Коммунарка, Москва, Центральный федеральный округ, 108801, Россия
+2026-05-12 00:05:48,681 - INFO - 🗺️ Location Agent: Starting search for 'район Новосибирска'
+2026-05-12 00:05:48,681 - INFO -    💡 Reason: Для получения спутниковых снимков района застройки
+2026-05-12 00:05:48,681 - INFO -    📝 Context: Анализ изменения доли застроенных территорий
+2026-05-12 00:05:48,681 - INFO - 🤖 Invoking ReAct agent (max_iterations=30)
+2026-05-12 00:06:02,535 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 216765026,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 960831,
+    ...
+2026-05-12 00:06:02,535 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 217304484,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 366544,
+    ...
+2026-05-12 00:06:02,535 - INFO - 💭 Agent thinking: Вот координаты для района Новосибирска:
+
+```json
+{
+  "found": true,
+  "lat": 54.9678145,
+  "lon": 82.9515989,
+  "bbox": [82.7511322, 54.8009038, 83.1602273, 55.1994565],
+  "display_name": "Новосибирск...
+2026-05-12 00:06:02,536 - INFO - ✅ Location found: lat=54.9678145, lon=82.9515989
+2026-05-12 00:06:02,536 - INFO - 📍 BBox: [82.7511322, 54.8009038, 83.1602273, 55.1994565]
+2026-05-12 00:06:02,536 - INFO - 🏷️ Display name: Новосибирск, Новосибирская область, Сибирский федеральный округ, 630000, Россия
+2026-05-12 00:09:31,382 - INFO - 🗺️ Location Agent: Starting search for 'Новосибирск'
+2026-05-12 00:09:31,382 - INFO -    💡 Reason: Для получения спутниковых снимков застроенных территорий в Новосибирске
+2026-05-12 00:09:31,382 - INFO -    📝 Context: Анализ динамики застроенных территорий за три года
+2026-05-12 00:09:31,382 - INFO - 🤖 Invoking ReAct agent (max_iterations=30)
+2026-05-12 00:09:41,216 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 217304484,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 366544,
+    ...
+2026-05-12 00:09:41,217 - INFO - 💭 Agent thinking: ```json
+{
+  "found": true,
+  "lat": 54.9678145,
+  "lon": 82.9515989,
+  "bbox": [82.7511322, 54.8009038, 83.1602273, 55.1994565],
+  "display_name": "Новосибирск, Новосибирская область, Сибирский федера...
+2026-05-12 00:09:41,217 - INFO - ✅ Location found: lat=54.9678145, lon=82.9515989
+2026-05-12 00:09:41,217 - INFO - 📍 BBox: [82.7511322, 54.8009038, 83.1602273, 55.1994565]
+2026-05-12 00:09:41,217 - INFO - 🏷️ Display name: Новосибирск, Новосибирская область, Сибирский федеральный округ, 630000, Россия
+2026-05-12 00:12:44,650 - INFO - 🗺️ Location Agent: Starting search for 'Казань, Татарстан'
+2026-05-12 00:12:44,650 - INFO -    💡 Reason: Для получения спутниковых снимков города Казани
+2026-05-12 00:12:44,650 - INFO -    📝 Context: Анализ изменений растительности в городе
+2026-05-12 00:12:44,650 - INFO - 🤖 Invoking ReAct agent (max_iterations=30)
+2026-05-12 00:12:53,582 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 201267185,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 3437391,
+   ...
+2026-05-12 00:12:53,582 - INFO - 💭 Agent thinking: ```json
+{
+  "found": true,
+  "lat": 55.7946485,
+  "lon": 49.1115022,
+  "bbox": [49.1115022, 55.6031357, 49.3812469, 55.9307390],
+  "display_name": "Казань, городской округ Казань, Татарстан, Приволжск...
+2026-05-12 00:12:53,582 - INFO - ✅ Location found: lat=55.7946485, lon=49.1115022
+2026-05-12 00:12:53,582 - INFO - 📍 BBox: [49.1115022, 55.6031357, 49.3812469, 55.930739]
+2026-05-12 00:12:53,582 - INFO - 🏷️ Display name: Казань, городской округ Казань, Татарстан, Приволжский федеральный округ, Россия
+2026-05-12 00:15:02,589 - INFO - 🗺️ Location Agent: Starting search for 'Казань, Татарстан'
+2026-05-12 00:15:02,589 - INFO -    💡 Reason: Для получения спутниковых снимков территории Казани
+2026-05-12 00:15:02,589 - INFO -    📝 Context: Сравнение доли территории с выраженной растительностью в разные годы
+2026-05-12 00:15:02,589 - INFO - 🤖 Invoking ReAct agent (max_iterations=30)
+2026-05-12 00:15:16,896 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 201267185,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 3437391,
+   ...
+2026-05-12 00:15:16,896 - INFO - 💭 Agent thinking: ```json
+{
+  "found": true,
+  "lat": 55.7946485,
+  "lon": 49.1115022,
+  "bbox": [49.1115022, 55.6031357, 49.3812469, 55.9307390],
+  "display_name": "Казань, городской округ Казань, Татарстан, Приволжск...
+2026-05-12 00:15:16,896 - INFO - ✅ Location found: lat=55.7946485, lon=49.1115022
+2026-05-12 00:15:16,896 - INFO - 📍 BBox: [49.1115022, 55.6031357, 49.3812469, 55.930739]
+2026-05-12 00:15:16,896 - INFO - 🏷️ Display name: Казань, городской округ Казань, Татарстан, Приволжский федеральный округ, Россия
+2026-05-12 00:16:59,882 - INFO - 🗺️ Location Agent: Starting search for 'Новосибирск'
+2026-05-12 00:16:59,882 - INFO -    💡 Reason: Для получения спутниковых снимков района Новосибирска
+2026-05-12 00:16:59,882 - INFO -    📝 Context: Анализ застроенных территорий в Новосибирске за указанные годы
+2026-05-12 00:16:59,882 - INFO - 🤖 Invoking ReAct agent (max_iterations=30)
+2026-05-12 00:17:11,105 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 217304484,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 366544,
+    ...
+2026-05-12 00:17:11,105 - INFO - 💭 Agent thinking: Вот координаты для локации "Новосибирск":
+
+```json
+{
+  "found": true,
+  "lat": 54.9678145,
+  "lon": 82.9515989,
+  "bbox": [82.7511322, 54.8009038, 83.1602273, 55.1994565],
+  "display_name": "Новосибир...
+2026-05-12 00:17:11,105 - INFO - ✅ Location found: lat=54.9678145, lon=82.9515989
+2026-05-12 00:17:11,105 - INFO - 📍 BBox: [82.7511322, 54.8009038, 83.1602273, 55.1994565]
+2026-05-12 00:17:11,105 - INFO - 🏷️ Display name: Новосибирск, Новосибирская область, Сибирский федеральный округ, 630000, Россия
+2026-05-12 00:19:56,606 - INFO - 🗺️ Location Agent: Starting search for 'Новосибирск'
+2026-05-12 00:19:56,606 - INFO -    💡 Reason: Для получения спутниковых снимков застроенных территорий в Новосибирске
+2026-05-12 00:19:56,606 - INFO -    📝 Context: Анализ застроенных территорий в 2022 и 2023 годах
+2026-05-12 00:19:56,606 - INFO - 🤖 Invoking ReAct agent (max_iterations=30)
+2026-05-12 00:20:05,078 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 217304484,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 366544,
+    ...
+2026-05-12 00:20:05,078 - INFO - 💭 Agent thinking: ```json
+{
+  "found": true,
+  "lat": 54.9678145,
+  "lon": 82.9515989,
+  "bbox": [82.7511322, 54.8009038, 83.1602273, 55.1994565],
+  "display_name": "Новосибирск, Новосибирская область, Сибирский федера...
+2026-05-12 00:20:05,078 - INFO - ✅ Location found: lat=54.9678145, lon=82.9515989
+2026-05-12 00:20:05,078 - INFO - 📍 BBox: [82.7511322, 54.8009038, 83.1602273, 55.1994565]
+2026-05-12 00:20:05,078 - INFO - 🏷️ Display name: Новосибирск, Новосибирская область, Сибирский федеральный округ, 630000, Россия
+2026-05-12 00:21:50,482 - INFO - 🗺️ Location Agent: Starting search for 'набережная Санкт-Петербурга'
+2026-05-12 00:21:50,482 - INFO -    💡 Reason: Для получения спутниковых снимков набережной и анализа мутности воды
+2026-05-12 00:21:50,482 - INFO -    📝 Context: Анализ оптического показателя мутности воды в реке или водоеме у набережной
+2026-05-12 00:21:50,482 - INFO - 🤖 Invoking ReAct agent (max_iterations=30)
+2026-05-12 00:22:13,974 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 169044427,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 622981715,
+     ...
+2026-05-12 00:22:13,974 - INFO - 📊 Tool result (search_location): {
+  "results": [],
+  "count": 0,
+  "query": "набережная реки Невы, Санкт-Петербург"
+}...
+2026-05-12 00:22:13,974 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 169372371,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 223084440,
+      ...
+2026-05-12 00:22:13,974 - INFO - 💭 Agent thinking: Вот координаты для набережной реки Мойки в Санкт-Петербурге:
+
+```json
+{
+  "found": true,
+  "lat": 59.9289369,
+  "lon": 30.2972276,
+  "bbox": [59.9280022, 30.2952607, 59.9298786, 30.2991896],
+  "displa...
+2026-05-12 00:22:13,974 - INFO - ✅ Location found: lat=59.9289369, lon=30.2972276
+2026-05-12 00:22:13,975 - INFO - 📍 BBox: [59.9280022, 30.2952607, 59.9298786, 30.2991896]
+2026-05-12 00:22:13,975 - INFO - 🏷️ Display name: набережная реки Мойки, Адмиралтейский округ, Санкт-Петербург, Северо-Западный федеральный округ, 197000, Россия
+2026-05-12 00:24:35,125 - INFO - 🗺️ Location Agent: Starting search for 'Казань, Татарстан'
+2026-05-12 00:24:35,125 - INFO -    💡 Reason: Для получения спутниковых снимков территории Казани
+2026-05-12 00:24:35,125 - INFO -    📝 Context: Анализ доли территории с растительностью в Казани
+2026-05-12 00:24:35,125 - INFO - 🤖 Invoking ReAct agent (max_iterations=30)
+2026-05-12 00:24:44,800 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 201267185,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 3437391,
+   ...
+2026-05-12 00:24:44,800 - INFO - 💭 Agent thinking: ```json
+{
+  "found": true,
+  "lat": 55.7946485,
+  "lon": 49.1115022,
+  "bbox": [49.1115022, 55.6031357, 49.3812469, 55.9307390],
+  "display_name": "Казань, городской округ Казань, Татарстан, Приволжск...
+2026-05-12 00:24:44,800 - INFO - ✅ Location found: lat=55.7946485, lon=49.1115022
+2026-05-12 00:24:44,800 - INFO - 📍 BBox: [49.1115022, 55.6031357, 49.3812469, 55.930739]
+2026-05-12 00:24:44,800 - INFO - 🏷️ Display name: Казань, городской округ Казань, Татарстан, Приволжский федеральный округ, Россия
+2026-05-12 00:26:28,202 - INFO - 🗺️ Location Agent: Starting search for 'Новосибирск'
+2026-05-12 00:26:28,202 - INFO -    💡 Reason: Для получения спутниковых снимков города Новосибирск
+2026-05-12 00:26:28,202 - INFO -    📝 Context: Анализ изменений застроенных территорий в Новосибирске
+2026-05-12 00:26:28,202 - INFO - 🤖 Invoking ReAct agent (max_iterations=30)
+2026-05-12 00:26:36,468 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 217304484,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 366544,
+    ...
+2026-05-12 00:26:36,469 - INFO - 💭 Agent thinking: Вот координаты для локации "Новосибирск":
+
+```json
+{
+  "found": true,
+  "lat": 54.9678145,
+  "lon": 82.9515989,
+  "bbox": [82.7511322, 54.8009038, 83.1602273, 55.1994565],
+  "display_name": "Новосибир...
+2026-05-12 00:26:36,469 - INFO - ✅ Location found: lat=54.9678145, lon=82.9515989
+2026-05-12 00:26:36,469 - INFO - 📍 BBox: [82.7511322, 54.8009038, 83.1602273, 55.1994565]
+2026-05-12 00:26:36,469 - INFO - 🏷️ Display name: Новосибирск, Новосибирская область, Сибирский федеральный округ, 630000, Россия
+2026-05-12 00:28:44,320 - INFO - 🗺️ Location Agent: Starting search for 'Казань'
+2026-05-12 00:28:44,321 - INFO -    💡 Reason: Для получения спутниковых снимков города Казани
+2026-05-12 00:28:44,321 - INFO -    📝 Context: Анализ изменения растительного покрова в Казани
+2026-05-12 00:28:44,321 - INFO - 🤖 Invoking ReAct agent (max_iterations=30)
+2026-05-12 00:29:04,469 - INFO - 📊 Tool result (search_location): {
+  "results": [
+    {
+      "place_id": 186433571,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 3437391,
+   ...
+2026-05-12 00:29:04,469 - INFO - 💭 Agent thinking: ```json
+{
+  "found": true,
+  "lat": 55.7946485,
+  "lon": 49.1115022,
+  "bbox": [49.1115022, 55.6031357, 49.3812469, 55.9307390],
+  "display_name": "Казань, городской округ Казань, Татарстан, Приволжск...
+2026-05-12 00:29:04,469 - INFO - ✅ Location found: lat=55.7946485, lon=49.1115022
+2026-05-12 00:29:04,469 - INFO - 📍 BBox: [49.1115022, 55.6031357, 49.3812469, 55.930739]
+2026-05-12 00:29:04,469 - INFO - 🏷️ Display name: Казань, городской округ Казань, Татарстан, Приволжский федеральный округ, Россия

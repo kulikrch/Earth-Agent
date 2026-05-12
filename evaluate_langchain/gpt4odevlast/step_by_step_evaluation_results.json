@@ -1,0 +1,3444 @@
+{
+  "individual_results": {
+    "question1": {
+      "contains_all_tool_calls_any_order": {
+        "score": 0.7777777777777778,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.3333333333333333
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 1,
+                "matched_tool_names": [
+                  "search_location"
+                ],
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_structured",
+                  "search_location",
+                  "search_location",
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "download_bands",
+                  "list_collections",
+                  "search_images"
+                ],
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.3333333333333333,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "calc_batch_image_mean"
+                ],
+                "expected_sequence": [
+                  "lst_single_channel",
+                  "calc_batch_image_mean",
+                  "subtract"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_threshold_ratio",
+                  "calculate_band_mean_by_condition",
+                  "calculate_band_mean_by_condition",
+                  "difference",
+                  "celsius_to_kelvin",
+                  "kelvin_to_celsius",
+                  "calc_batch_image_mean",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 2
+              }
+            }
+          }
+        }
+      },
+      "contains_all_tool_calls_in_order": {
+        "score": 0.6666666666666666,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_structured",
+                  "search_location",
+                  "search_location",
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.0,
+              "details": {
+                "matched_in_order": 0,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "lst_single_channel",
+                  "calculate_mean_lst_by_ndvi",
+                  "subtract"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_threshold_ratio",
+                  "calculate_band_mean_by_condition",
+                  "calculate_band_mean_by_condition",
+                  "difference",
+                  "celsius_to_kelvin",
+                  "kelvin_to_celsius",
+                  "calc_batch_image_mean",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "trajectory_step_wise_score": {
+        "score": 0.38888888888888884,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 0.5,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 0.5,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 2,
+                "expected_sequence": [
+                  "search_structured",
+                  "get_place_details"
+                ],
+                "actual_sequence_prefix": [
+                  "search_structured",
+                  "search_location"
+                ],
+                "matched_candidate_index": 1
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence_prefix": [
+                  "list_collections",
+                  "search_images",
+                  "search_images"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.0,
+              "details": {
+                "correct_steps": 0,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "lst_single_channel",
+                  "calculate_mean_lst_by_ndvi",
+                  "subtract"
+                ],
+                "actual_sequence_prefix": [
+                  "calculate_batch_threshold_ratio",
+                  "calculate_band_mean_by_condition",
+                  "calculate_band_mean_by_condition"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "parameter_accuracy": {
+        "score": 0.38888888888888884,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 0.5,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 0.5,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 2,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "search_structured",
+                    "actual_tool_name": "search_structured",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "get_place_details",
+                    "actual_tool_name": "search_location",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 1
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "list_collections",
+                    "actual_tool_name": "list_collections",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "search_images",
+                    "actual_tool_name": "search_images",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "download_bands",
+                    "actual_tool_name": "search_images",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.0,
+              "details": {
+                "matched_steps": 0,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "lst_single_channel",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "question2": {
+      "contains_all_tool_calls_any_order": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 1,
+                "matched_tool_names": [
+                  "search_location"
+                ],
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location",
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "download_bands",
+                  "list_collections",
+                  "search_images"
+                ],
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_tools": 2,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "percentage_change"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "contains_all_tool_calls_in_order": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location",
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_in_order": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "percentage_change"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "trajectory_step_wise_score": {
+        "score": 0.7777777777777777,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence_prefix": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence_prefix": [
+                  "list_collections",
+                  "search_images",
+                  "search_images"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "percentage_change"
+                ],
+                "actual_sequence_prefix": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "parameter_accuracy": {
+        "score": 0.7777777777777777,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 1,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "search_location",
+                    "actual_tool_name": "search_location",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "list_collections",
+                    "actual_tool_name": "list_collections",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "search_images",
+                    "actual_tool_name": "search_images",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "download_bands",
+                    "actual_tool_name": "search_images",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "calculate_batch_ndbi",
+                    "actual_tool_name": "calculate_batch_ndbi",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "calculate_batch_threshold_ratio",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "percentage_change",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "question3": {
+      "contains_all_tool_calls_any_order": {
+        "score": 1.0,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 1,
+                "matched_tool_names": [
+                  "search_location"
+                ],
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "download_bands",
+                  "list_collections",
+                  "search_images"
+                ],
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 2,
+                "total_expected": 2,
+                "matched_tool_names": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "contains_all_tool_calls_in_order": {
+        "score": 1.0,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 2,
+                "total_expected": 2,
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "trajectory_step_wise_score": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence_prefix": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence_prefix": [
+                  "list_collections",
+                  "search_images",
+                  "search_images"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 2,
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "actual_sequence_prefix": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "parameter_accuracy": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 1,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "search_location",
+                    "actual_tool_name": "search_location",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "list_collections",
+                    "actual_tool_name": "list_collections",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "search_images",
+                    "actual_tool_name": "search_images",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "download_bands",
+                    "actual_tool_name": "search_images",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 2,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "calculate_batch_ndbi",
+                    "actual_tool_name": "calculate_batch_ndbi",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "calculate_batch_threshold_ratio",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "question4": {
+      "contains_all_tool_calls_any_order": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 1,
+                "matched_tool_names": [
+                  "search_location"
+                ],
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "download_bands",
+                  "list_collections",
+                  "search_images"
+                ],
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_tools": 2,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "calculate_batch_ndvi",
+                  "percentage_change"
+                ],
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calc_batch_image_mean",
+                  "percentage_change"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "contains_all_tool_calls_in_order": {
+        "score": 0.7777777777777778,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.3333333333333333
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.3333333333333333,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calc_batch_image_mean",
+                  "percentage_change"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "trajectory_step_wise_score": {
+        "score": 0.6666666666666666,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.3333333333333333
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence_prefix": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence_prefix": [
+                  "list_collections",
+                  "search_images",
+                  "search_images"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.3333333333333333,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calc_batch_image_mean",
+                  "percentage_change"
+                ],
+                "actual_sequence_prefix": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "parameter_accuracy": {
+        "score": 0.6666666666666666,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.3333333333333333
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 1,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "search_location",
+                    "actual_tool_name": "search_location",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "list_collections",
+                    "actual_tool_name": "list_collections",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "search_images",
+                    "actual_tool_name": "search_images",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "download_bands",
+                    "actual_tool_name": "search_images",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.3333333333333333,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "calculate_batch_ndvi",
+                    "actual_tool_name": "calculate_batch_ndvi",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "calc_batch_image_mean",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "question5": {
+      "contains_all_tool_calls_any_order": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 1,
+                "matched_tool_names": [
+                  "search_location"
+                ],
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "download_bands",
+                  "list_collections",
+                  "search_images"
+                ],
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_tools": 2,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "contains_all_tool_calls_in_order": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_in_order": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "trajectory_step_wise_score": {
+        "score": 0.7777777777777777,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence_prefix": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence_prefix": [
+                  "list_collections",
+                  "search_images",
+                  "search_images"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence_prefix": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "parameter_accuracy": {
+        "score": 0.7777777777777777,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 1,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "search_location",
+                    "actual_tool_name": "search_location",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "list_collections",
+                    "actual_tool_name": "list_collections",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "search_images",
+                    "actual_tool_name": "search_images",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "download_bands",
+                    "actual_tool_name": "search_images",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "calculate_batch_ndvi",
+                    "actual_tool_name": "calculate_batch_ndvi",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "calculate_batch_threshold_ratio",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "difference",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "question6": {
+      "contains_all_tool_calls_any_order": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 1,
+                "matched_tool_names": [
+                  "search_location"
+                ],
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "download_bands",
+                  "list_collections",
+                  "search_images"
+                ],
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_tools": 2,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "min_value_and_index"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "calc_batch_image_mean",
+                  "calc_batch_image_mean_max_min"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "contains_all_tool_calls_in_order": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_in_order": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "min_value_and_index"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "calc_batch_image_mean",
+                  "calc_batch_image_mean_max_min"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "trajectory_step_wise_score": {
+        "score": 0.7777777777777777,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence_prefix": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence_prefix": [
+                  "list_collections",
+                  "search_images",
+                  "search_images"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "min_value_and_index"
+                ],
+                "actual_sequence_prefix": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "calc_batch_image_mean"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "parameter_accuracy": {
+        "score": 0.7777777777777777,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 1,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "search_location",
+                    "actual_tool_name": "search_location",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "list_collections",
+                    "actual_tool_name": "list_collections",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "search_images",
+                    "actual_tool_name": "search_images",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "download_bands",
+                    "actual_tool_name": "search_images",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "calculate_batch_ndbi",
+                    "actual_tool_name": "calculate_batch_ndbi",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "calculate_batch_threshold_ratio",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "min_value_and_index",
+                    "actual_tool_name": "calc_batch_image_mean",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "question7": {
+      "contains_all_tool_calls_any_order": {
+        "score": 1.0,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 1,
+                "matched_tool_names": [
+                  "search_location"
+                ],
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "download_bands",
+                  "list_collections",
+                  "search_images"
+                ],
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "division"
+                ],
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "division"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "difference",
+                  "division",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "contains_all_tool_calls_in_order": {
+        "score": 1.0,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "division"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "difference",
+                  "division",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "trajectory_step_wise_score": {
+        "score": 0.7777777777777777,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence_prefix": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence_prefix": [
+                  "list_collections",
+                  "search_images",
+                  "search_images"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "division"
+                ],
+                "actual_sequence_prefix": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "parameter_accuracy": {
+        "score": 0.7777777777777777,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 1,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "search_location",
+                    "actual_tool_name": "search_location",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "list_collections",
+                    "actual_tool_name": "list_collections",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "search_images",
+                    "actual_tool_name": "search_images",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "download_bands",
+                    "actual_tool_name": "search_images",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "calculate_batch_ndbi",
+                    "actual_tool_name": "calculate_batch_ndbi",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "calculate_batch_threshold_ratio",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "division",
+                    "actual_tool_name": "difference",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "question8": {
+      "contains_all_tool_calls_any_order": {
+        "score": 1.0,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 1,
+                "matched_tool_names": [
+                  "search_location"
+                ],
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location",
+                  "search_location",
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "download_bands",
+                  "list_collections",
+                  "search_images"
+                ],
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "calc_batch_image_mean",
+                  "calculate_batch_ndti",
+                  "percentage_change"
+                ],
+                "expected_sequence": [
+                  "calculate_batch_ndti",
+                  "calc_batch_image_mean",
+                  "percentage_change"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndti",
+                  "calculate_batch_wri",
+                  "calc_batch_image_mean",
+                  "calc_batch_image_mean",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "contains_all_tool_calls_in_order": {
+        "score": 1.0,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location",
+                  "search_location",
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndti",
+                  "calc_batch_image_mean",
+                  "percentage_change"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndti",
+                  "calculate_batch_wri",
+                  "calc_batch_image_mean",
+                  "calc_batch_image_mean",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "trajectory_step_wise_score": {
+        "score": 0.6666666666666666,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.3333333333333333
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence_prefix": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence_prefix": [
+                  "list_collections",
+                  "search_images",
+                  "search_images"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.3333333333333333,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndti",
+                  "calc_batch_image_mean",
+                  "percentage_change"
+                ],
+                "actual_sequence_prefix": [
+                  "calculate_batch_ndti",
+                  "calculate_batch_wri",
+                  "calc_batch_image_mean"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "parameter_accuracy": {
+        "score": 0.6666666666666666,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.3333333333333333
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 1,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "search_location",
+                    "actual_tool_name": "search_location",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "list_collections",
+                    "actual_tool_name": "list_collections",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "search_images",
+                    "actual_tool_name": "search_images",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "download_bands",
+                    "actual_tool_name": "search_images",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.3333333333333333,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "calculate_batch_ndti",
+                    "actual_tool_name": "calculate_batch_ndti",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "calc_batch_image_mean",
+                    "actual_tool_name": "calculate_batch_wri",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "question9": {
+      "contains_all_tool_calls_any_order": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 1,
+                "matched_tool_names": [
+                  "search_location"
+                ],
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "download_bands",
+                  "list_collections",
+                  "search_images"
+                ],
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_tools": 2,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "contains_all_tool_calls_in_order": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_in_order": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "trajectory_step_wise_score": {
+        "score": 0.7777777777777777,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence_prefix": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence_prefix": [
+                  "list_collections",
+                  "search_images",
+                  "search_images"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence_prefix": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "calculate_batch_threshold_ratio"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "parameter_accuracy": {
+        "score": 0.7777777777777777,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 0.6666666666666666
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 1,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "search_location",
+                    "actual_tool_name": "search_location",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "list_collections",
+                    "actual_tool_name": "list_collections",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "search_images",
+                    "actual_tool_name": "search_images",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "download_bands",
+                    "actual_tool_name": "search_images",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "calculate_batch_ndvi",
+                    "actual_tool_name": "calculate_batch_ndvi",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "calculate_batch_threshold_ratio",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "difference",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "question10": {
+      "contains_all_tool_calls_any_order": {
+        "score": 1.0,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 1,
+                "matched_tool_names": [
+                  "search_location"
+                ],
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "download_bands",
+                  "list_collections",
+                  "search_images"
+                ],
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "difference",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "contains_all_tool_calls_in_order": {
+        "score": 1.0,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "difference",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "trajectory_step_wise_score": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence_prefix": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence_prefix": [
+                  "list_collections",
+                  "search_images",
+                  "search_images"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence_prefix": [
+                  "calculate_batch_ndbi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "parameter_accuracy": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 1,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "search_location",
+                    "actual_tool_name": "search_location",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "list_collections",
+                    "actual_tool_name": "list_collections",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "search_images",
+                    "actual_tool_name": "search_images",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "download_bands",
+                    "actual_tool_name": "search_images",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 3,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "calculate_batch_ndbi",
+                    "actual_tool_name": "calculate_batch_ndbi",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "calculate_batch_threshold_ratio",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "difference",
+                    "actual_tool_name": "difference",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "question11": {
+      "contains_all_tool_calls_any_order": {
+        "score": 1.0,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 1,
+                "total_expected": 1,
+                "matched_tool_names": [
+                  "search_location"
+                ],
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "download_bands",
+                  "list_collections",
+                  "search_images"
+                ],
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_tools": 3,
+                "total_expected": 3,
+                "matched_tool_names": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "contains_all_tool_calls_in_order": {
+        "score": 1.0,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 1.0,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "search_images",
+                  "download_bands",
+                  "download_bands"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_in_order": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference",
+                  "percentage_change"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "trajectory_step_wise_score": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 1,
+                "total_expected": 1,
+                "expected_sequence": [
+                  "search_location"
+                ],
+                "actual_sequence_prefix": [
+                  "search_location"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "correct_steps": 2,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "list_collections",
+                  "search_images",
+                  "download_bands"
+                ],
+                "actual_sequence_prefix": [
+                  "list_collections",
+                  "search_images",
+                  "search_images"
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "correct_steps": 3,
+                "total_expected": 3,
+                "expected_sequence": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "actual_sequence_prefix": [
+                  "calculate_batch_ndvi",
+                  "calculate_batch_threshold_ratio",
+                  "difference"
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      },
+      "parameter_accuracy": {
+        "score": 0.8888888888888888,
+        "details": {
+          "mode": "multiagent",
+          "agent_scores": {
+            "location_agent": 1.0,
+            "data_acquisition_agent": 0.6666666666666666,
+            "main_agent": 1.0
+          },
+          "agent_metric_details": {
+            "location_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 1,
+                "total_expected_steps": 1,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "search_location",
+                    "actual_tool_name": "search_location",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "data_acquisition_agent": {
+              "score": 0.6666666666666666,
+              "details": {
+                "matched_steps": 2,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "list_collections",
+                    "actual_tool_name": "list_collections",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "search_images",
+                    "actual_tool_name": "search_images",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "download_bands",
+                    "actual_tool_name": "search_images",
+                    "name_match": false,
+                    "input_match": true,
+                    "is_correct": false
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            },
+            "main_agent": {
+              "score": 1.0,
+              "details": {
+                "matched_steps": 3,
+                "total_expected_steps": 3,
+                "call_details": [
+                  {
+                    "step": 1,
+                    "expected_tool_name": "calculate_batch_ndvi",
+                    "actual_tool_name": "calculate_batch_ndvi",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 2,
+                    "expected_tool_name": "calculate_batch_threshold_ratio",
+                    "actual_tool_name": "calculate_batch_threshold_ratio",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  },
+                  {
+                    "step": 3,
+                    "expected_tool_name": "difference",
+                    "actual_tool_name": "difference",
+                    "name_match": true,
+                    "input_match": true,
+                    "is_correct": true
+                  }
+                ],
+                "matched_candidate_index": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "summary": {
+    "total_questions": 11,
+    "evaluated_questions": 11,
+    "missing_predictions": [],
+    "metrics_summary": {
+      "contains_all_tool_calls_any_order": {
+        "total_score": 10.222222222222223,
+        "count": 11,
+        "average_score": 0.9292929292929294
+      },
+      "contains_all_tool_calls_in_order": {
+        "total_score": 10.0,
+        "count": 11,
+        "average_score": 0.9090909090909091
+      },
+      "trajectory_step_wise_score": {
+        "total_score": 8.277777777777777,
+        "count": 11,
+        "average_score": 0.7525252525252525
+      },
+      "parameter_accuracy": {
+        "total_score": 8.277777777777777,
+        "count": 11,
+        "average_score": 0.7525252525252525
+      }
+    }
+  }
+}

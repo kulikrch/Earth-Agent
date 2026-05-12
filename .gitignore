@@ -1,6 +1,7 @@
 # Dataset folder
 benchmark/data/
-evaluate_langchain/
+evaluate_langchain/*
+!evaluate_langchain/gpt4odevlast
 logs/
 
 # Environment variables and secrets

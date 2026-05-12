@@ -1,0 +1,677 @@
+2026-05-12 00:02:38,632 - INFO - 🔍 Calling Analyze Question Agent
+2026-05-12 00:02:44,362 - INFO - 📊 Analyze Question Agent completed:
+2026-05-12 00:02:44,362 - INFO -    - Location needed: True
+2026-05-12 00:02:44,362 - INFO -    - Data acquisition needed: True
+2026-05-12 00:02:44,362 - INFO -    - Analysis contract: {'measurement_target': 'surface_temperature_difference', 'expected_unit': 'celsius_difference', 'comparison_type': 'spatial_contrast_between_periods', 'required_file_roles': ['thermal', 'red', 'nir'], 'invalid_methods': ['raw_band_mean_as_temperature', 'vegetation_area_share_as_temperature']}
+2026-05-12 00:02:44,363 - INFO - 🗺️ Calling Location Agent with query: 'Скандинавский бульвар, 6, поселение Сосенское, Коммунарка, Москва'
+2026-05-12 00:02:44,363 - INFO -    Reason: Для получения спутниковых снимков района застройки
+2026-05-12 00:02:44,363 - INFO -    Context: Анализ теплового контраста между застройкой и зелеными зонами
+2026-05-12 00:03:13,058 - INFO - 📊 Location Agent completed:
+2026-05-12 00:03:13,058 - INFO -    - Found: True
+2026-05-12 00:03:13,058 - INFO -    - Attempts: 0
+2026-05-12 00:03:13,058 - INFO -    - Coordinates: lat=55.5662578, lon=37.4964502
+2026-05-12 00:03:13,058 - INFO -    - Display name: 6, Скандинавский бульвар, Скандинавия, район Коммунарка, Москва, Центральный федеральный округ, 108801, Россия
+2026-05-12 00:03:13,058 - INFO -    - Tool calls made:
+2026-05-12 00:03:13,058 - INFO -    - Agent thoughts:
+2026-05-12 00:03:13,058 - INFO -      1. ```json
+{
+  "found": true,
+  "lat": 55.5662578,
+  "lon": 37.4964502,
+  "bbox": [37.4953727, 55.5652741, 37.4981232, 55.5666424],
+  "display_name": "6,...
+2026-05-12 00:03:13,059 - INFO - 📡 Calling Data Acquisition Agent...
+2026-05-12 00:03:13,059 - INFO -    Requirements:
+Найди и скачай спутниковые снимки для анализа:
+
+Локация: bbox=[37.4953727, 55.5652741, 37.4981232, 55.5666424]
+
+Временные периоды:
+  1. 2018: 2018-06-01 - 2018-08-31
+  2. 2022: 2022-06-01 - 2022-08-31
+
+Цель анализа: Сравнение температуры поверхности застройки и окружающих зелёных зон
+
+Аналитический контракт для выбора данных:
+{
+  "measurement_target": "surface_temperature_difference",
+  "expected_unit": "celsius_difference",
+  "comparison_type": "spatial_contrast_between_periods",
+  "required_file_roles": [
+    "thermal",
+    "red",
+    "nir"
+  ],
+  "invalid_methods": [
+    "raw_band_mean_as_temperature",
+    "vegetation_area_share_as_temperature"
+  ]
+}
+
+Сохранить файлы в директорию: question_1/
+
+2026-05-12 00:04:44,275 - INFO - 📊 Data Acquisition Agent completed:
+2026-05-12 00:04:44,275 - INFO -    - Success: True
+2026-05-12 00:04:44,275 - INFO -    - Files downloaded: 6
+2026-05-12 00:04:44,275 - INFO -    - Total attempts: 0
+2026-05-12 00:04:44,276 - INFO -      1. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt4odevlast\out\question_1\2018_SR_B4.tif
+2026-05-12 00:04:44,276 - INFO -      2. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt4odevlast\out\question_1\2018_SR_B5.tif
+2026-05-12 00:04:44,276 - INFO -      3. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt4odevlast\out\question_1\2018_ST_B10.tif
+2026-05-12 00:04:44,276 - INFO -      4. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt4odevlast\out\question_1\2022_SR_B4.tif
+2026-05-12 00:04:44,276 - INFO -      5. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt4odevlast\out\question_1\2022_SR_B5.tif
+2026-05-12 00:04:44,276 - INFO -      6. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt4odevlast\out\question_1\2022_ST_B10.tif
+2026-05-12 00:04:44,276 - INFO - 🤖 Calling Main Agent
+2026-05-12 00:05:41,840 - INFO - 🔍 Calling Analyze Question Agent
+2026-05-12 00:05:48,679 - INFO - 📊 Analyze Question Agent completed:
+2026-05-12 00:05:48,679 - INFO -    - Location needed: True
+2026-05-12 00:05:48,679 - INFO -    - Data acquisition needed: True
+2026-05-12 00:05:48,679 - INFO -    - Analysis contract: {'measurement_target': 'built_up_area_share', 'expected_unit': 'percent_of_area', 'comparison_type': 'between_periods', 'required_file_roles': ['swir', 'nir'], 'invalid_methods': ['raw_band_mean_as_area_share', 'red_nir_as_built_up_proxy']}
+2026-05-12 00:05:48,680 - INFO - 🗺️ Calling Location Agent with query: 'район Новосибирска'
+2026-05-12 00:05:48,680 - INFO -    Reason: Для получения спутниковых снимков района застройки
+2026-05-12 00:05:48,680 - INFO -    Context: Анализ изменения доли застроенных территорий
+2026-05-12 00:06:02,537 - INFO - 📊 Location Agent completed:
+2026-05-12 00:06:02,537 - INFO -    - Found: True
+2026-05-12 00:06:02,537 - INFO -    - Attempts: 0
+2026-05-12 00:06:02,537 - INFO -    - Coordinates: lat=54.9678145, lon=82.9515989
+2026-05-12 00:06:02,537 - INFO -    - Display name: Новосибирск, Новосибирская область, Сибирский федеральный округ, 630000, Россия
+2026-05-12 00:06:02,537 - INFO -    - Tool calls made:
+2026-05-12 00:06:02,537 - INFO -    - Agent thoughts:
+2026-05-12 00:06:02,537 - INFO -      1. Вот координаты для района Новосибирска:
+
+```json
+{
+  "found": true,
+  "lat": 54.9678145,
+  "lon": 82.9515989,
+  "bbox": [82.7511322, 54.8009038, 83.16...
+2026-05-12 00:06:02,538 - INFO - 📡 Calling Data Acquisition Agent...
+2026-05-12 00:06:02,538 - INFO -    Requirements:
+Найди и скачай спутниковые снимки для анализа:
+
+Локация: bbox=[82.7511322, 54.8009038, 83.1602273, 55.1994565]
+
+Временные периоды:
+  1. 2020: 2020-03-01 - 2020-03-20
+  2. 2023: 2023-06-01 - 2023-06-20
+
+Цель анализа: Оценка изменения доли застроенных территорий
+
+Аналитический контракт для выбора данных:
+{
+  "measurement_target": "built_up_area_share",
+  "expected_unit": "percent_of_area",
+  "comparison_type": "between_periods",
+  "required_file_roles": [
+    "swir",
+    "nir"
+  ],
+  "invalid_methods": [
+    "raw_band_mean_as_area_share",
+    "red_nir_as_built_up_proxy"
+  ]
+}
+
+Сохранить файлы в директорию: question_2/
+
+2026-05-12 00:07:09,774 - INFO - 📊 Data Acquisition Agent completed:
+2026-05-12 00:07:09,774 - INFO -    - Success: True
+2026-05-12 00:07:09,774 - INFO -    - Files downloaded: 4
+2026-05-12 00:07:09,774 - INFO -    - Total attempts: 0
+2026-05-12 00:07:09,774 - INFO -      1. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_2\2020_B8.tif
+2026-05-12 00:07:09,774 - INFO -      2. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_2\2020_B11.tif
+2026-05-12 00:07:09,774 - INFO -      3. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_2\2023_B8.tif
+2026-05-12 00:07:09,774 - INFO -      4. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_2\2023_B11.tif
+2026-05-12 00:07:09,775 - INFO - 🤖 Calling Main Agent
+2026-05-12 00:09:24,669 - INFO - 🔍 Calling Analyze Question Agent
+2026-05-12 00:09:31,378 - INFO - 📊 Analyze Question Agent completed:
+2026-05-12 00:09:31,378 - INFO -    - Location needed: True
+2026-05-12 00:09:31,378 - INFO -    - Data acquisition needed: True
+2026-05-12 00:09:31,378 - INFO -    - Analysis contract: {'measurement_target': 'built_up_area_share', 'expected_unit': 'percent_of_area', 'comparison_type': 'between_periods', 'required_file_roles': ['swir', 'nir'], 'invalid_methods': ['raw_band_mean_as_area_share', 'mean_index_value_as_area_share', 'red_nir_as_built_up_proxy']}
+2026-05-12 00:09:31,380 - INFO - 🗺️ Calling Location Agent with query: 'Новосибирск'
+2026-05-12 00:09:31,380 - INFO -    Reason: Для получения спутниковых снимков застроенных территорий в Новосибирске
+2026-05-12 00:09:31,380 - INFO -    Context: Анализ динамики застроенных территорий за три года
+2026-05-12 00:09:41,217 - INFO - 📊 Location Agent completed:
+2026-05-12 00:09:41,217 - INFO -    - Found: True
+2026-05-12 00:09:41,217 - INFO -    - Attempts: 0
+2026-05-12 00:09:41,217 - INFO -    - Coordinates: lat=54.9678145, lon=82.9515989
+2026-05-12 00:09:41,218 - INFO -    - Display name: Новосибирск, Новосибирская область, Сибирский федеральный округ, 630000, Россия
+2026-05-12 00:09:41,218 - INFO -    - Tool calls made:
+2026-05-12 00:09:41,218 - INFO -    - Agent thoughts:
+2026-05-12 00:09:41,218 - INFO -      1. ```json
+{
+  "found": true,
+  "lat": 54.9678145,
+  "lon": 82.9515989,
+  "bbox": [82.7511322, 54.8009038, 83.1602273, 55.1994565],
+  "display_name": "Но...
+2026-05-12 00:09:41,218 - INFO - 📡 Calling Data Acquisition Agent...
+2026-05-12 00:09:41,218 - INFO -    Requirements:
+Найди и скачай спутниковые снимки для анализа:
+
+Локация: bbox=[82.7511322, 54.8009038, 83.1602273, 55.1994565]
+
+Временные периоды:
+  1. 2021: 2021-08-20 - 2021-08-30
+  2. 2022: 2022-05-22 - 2022-05-30
+  3. 2023: 2023-06-01 - 2023-06-10
+
+Цель анализа: Анализ динамики застроенных территорий
+
+Аналитический контракт для выбора данных:
+{
+  "measurement_target": "built_up_area_share",
+  "expected_unit": "percent_of_area",
+  "comparison_type": "between_periods",
+  "required_file_roles": [
+    "swir",
+    "nir"
+  ],
+  "invalid_methods": [
+    "raw_band_mean_as_area_share",
+    "mean_index_value_as_area_share",
+    "red_nir_as_built_up_proxy"
+  ]
+}
+
+Сохранить файлы в директорию: question_3/
+
+2026-05-12 00:10:59,571 - INFO - 📊 Data Acquisition Agent completed:
+2026-05-12 00:10:59,571 - INFO -    - Success: True
+2026-05-12 00:10:59,571 - INFO -    - Files downloaded: 6
+2026-05-12 00:10:59,571 - INFO -    - Total attempts: 0
+2026-05-12 00:10:59,571 - INFO -      1. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_3\2021_B11.tif
+2026-05-12 00:10:59,571 - INFO -      2. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_3\2021_B8.tif
+2026-05-12 00:10:59,571 - INFO -      3. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_3\2022_B11.tif
+2026-05-12 00:10:59,571 - INFO -      4. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_3\2022_B8.tif
+2026-05-12 00:10:59,571 - INFO -      5. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_3\2023_B11.tif
+2026-05-12 00:10:59,571 - INFO -      6. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_3\2023_B8.tif
+2026-05-12 00:10:59,572 - INFO - 🤖 Calling Main Agent
+2026-05-12 00:12:37,002 - INFO - 🔍 Calling Analyze Question Agent
+2026-05-12 00:12:44,647 - INFO - 📊 Analyze Question Agent completed:
+2026-05-12 00:12:44,647 - INFO -    - Location needed: True
+2026-05-12 00:12:44,647 - INFO -    - Data acquisition needed: True
+2026-05-12 00:12:44,647 - INFO -    - Analysis contract: {'measurement_target': 'vegetation_area_share', 'expected_unit': 'percent_of_area', 'comparison_type': 'between_periods', 'required_file_roles': ['red', 'nir'], 'invalid_methods': ['raw_band_mean_as_area_share', 'mean_index_value_as_area_share']}
+2026-05-12 00:12:44,648 - INFO - 🗺️ Calling Location Agent with query: 'Казань, Татарстан'
+2026-05-12 00:12:44,648 - INFO -    Reason: Для получения спутниковых снимков города Казани
+2026-05-12 00:12:44,648 - INFO -    Context: Анализ изменений растительности в городе
+2026-05-12 00:12:53,583 - INFO - 📊 Location Agent completed:
+2026-05-12 00:12:53,583 - INFO -    - Found: True
+2026-05-12 00:12:53,583 - INFO -    - Attempts: 0
+2026-05-12 00:12:53,583 - INFO -    - Coordinates: lat=55.7946485, lon=49.1115022
+2026-05-12 00:12:53,583 - INFO -    - Display name: Казань, городской округ Казань, Татарстан, Приволжский федеральный округ, Россия
+2026-05-12 00:12:53,583 - INFO -    - Tool calls made:
+2026-05-12 00:12:53,583 - INFO -    - Agent thoughts:
+2026-05-12 00:12:53,583 - INFO -      1. ```json
+{
+  "found": true,
+  "lat": 55.7946485,
+  "lon": 49.1115022,
+  "bbox": [49.1115022, 55.6031357, 49.3812469, 55.9307390],
+  "display_name": "Ка...
+2026-05-12 00:12:53,584 - INFO - 📡 Calling Data Acquisition Agent...
+2026-05-12 00:12:53,584 - INFO -    Requirements:
+Найди и скачай спутниковые снимки для анализа:
+
+Локация: bbox=[49.1115022, 55.6031357, 49.3812469, 55.930739]
+
+Временные периоды:
+  1. 2021: 2021-05-20 - 2021-06-20
+  2. 2023: 2023-08-01 - 2023-08-31
+
+Цель анализа: Сравнение растительности в Казани
+
+Аналитический контракт для выбора данных:
+{
+  "measurement_target": "vegetation_area_share",
+  "expected_unit": "percent_of_area",
+  "comparison_type": "between_periods",
+  "required_file_roles": [
+    "red",
+    "nir"
+  ],
+  "invalid_methods": [
+    "raw_band_mean_as_area_share",
+    "mean_index_value_as_area_share"
+  ]
+}
+
+Сохранить файлы в директорию: question_4/
+
+2026-05-12 00:14:01,653 - INFO - 📊 Data Acquisition Agent completed:
+2026-05-12 00:14:01,653 - INFO -    - Success: True
+2026-05-12 00:14:01,653 - INFO -    - Files downloaded: 4
+2026-05-12 00:14:01,653 - INFO -    - Total attempts: 0
+2026-05-12 00:14:01,653 - INFO -      1. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_4\2021_B4.tif
+2026-05-12 00:14:01,653 - INFO -      2. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_4\2021_B8.tif
+2026-05-12 00:14:01,653 - INFO -      3. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_4\2023_B4.tif
+2026-05-12 00:14:01,653 - INFO -      4. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_4\2023_B8.tif
+2026-05-12 00:14:01,654 - INFO - 🤖 Calling Main Agent
+2026-05-12 00:14:56,852 - INFO - 🔍 Calling Analyze Question Agent
+2026-05-12 00:15:02,587 - INFO - 📊 Analyze Question Agent completed:
+2026-05-12 00:15:02,587 - INFO -    - Location needed: True
+2026-05-12 00:15:02,587 - INFO -    - Data acquisition needed: True
+2026-05-12 00:15:02,587 - INFO -    - Analysis contract: {'measurement_target': 'vegetation_area_share', 'expected_unit': 'percent_of_area', 'comparison_type': 'between_periods', 'required_file_roles': ['nir', 'red'], 'invalid_methods': ['raw_band_mean_as_area_share', 'mean_index_value_as_area_share']}
+2026-05-12 00:15:02,588 - INFO - 🗺️ Calling Location Agent with query: 'Казань, Татарстан'
+2026-05-12 00:15:02,588 - INFO -    Reason: Для получения спутниковых снимков территории Казани
+2026-05-12 00:15:02,588 - INFO -    Context: Сравнение доли территории с выраженной растительностью в разные годы
+2026-05-12 00:15:16,897 - INFO - 📊 Location Agent completed:
+2026-05-12 00:15:16,897 - INFO -    - Found: True
+2026-05-12 00:15:16,897 - INFO -    - Attempts: 0
+2026-05-12 00:15:16,898 - INFO -    - Coordinates: lat=55.7946485, lon=49.1115022
+2026-05-12 00:15:16,898 - INFO -    - Display name: Казань, городской округ Казань, Татарстан, Приволжский федеральный округ, Россия
+2026-05-12 00:15:16,898 - INFO -    - Tool calls made:
+2026-05-12 00:15:16,898 - INFO -    - Agent thoughts:
+2026-05-12 00:15:16,898 - INFO -      1. ```json
+{
+  "found": true,
+  "lat": 55.7946485,
+  "lon": 49.1115022,
+  "bbox": [49.1115022, 55.6031357, 49.3812469, 55.9307390],
+  "display_name": "Ка...
+2026-05-12 00:15:16,898 - INFO - 📡 Calling Data Acquisition Agent...
+2026-05-12 00:15:16,898 - INFO -    Requirements:
+Найди и скачай спутниковые снимки для анализа:
+
+Локация: bbox=[49.1115022, 55.6031357, 49.3812469, 55.930739]
+
+Временные периоды:
+  1. 2021: 2021-05-20 - 2021-06-20
+  2. 2023: 2023-08-01 - 2023-08-31
+
+Цель анализа: Сравнение доли территории с выраженной растительностью
+
+Аналитический контракт для выбора данных:
+{
+  "measurement_target": "vegetation_area_share",
+  "expected_unit": "percent_of_area",
+  "comparison_type": "between_periods",
+  "required_file_roles": [
+    "nir",
+    "red"
+  ],
+  "invalid_methods": [
+    "raw_band_mean_as_area_share",
+    "mean_index_value_as_area_share"
+  ]
+}
+
+Сохранить файлы в директорию: question_5/
+
+2026-05-12 00:16:21,392 - INFO - 📊 Data Acquisition Agent completed:
+2026-05-12 00:16:21,392 - INFO -    - Success: True
+2026-05-12 00:16:21,392 - INFO -    - Files downloaded: 4
+2026-05-12 00:16:21,392 - INFO -    - Total attempts: 0
+2026-05-12 00:16:21,392 - INFO -      1. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_5\2021_red.tif
+2026-05-12 00:16:21,392 - INFO -      2. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_5\2021_nir.tif
+2026-05-12 00:16:21,393 - INFO -      3. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_5\2023_red.tif
+2026-05-12 00:16:21,393 - INFO -      4. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_5\2023_nir.tif
+2026-05-12 00:16:21,394 - INFO - 🤖 Calling Main Agent
+2026-05-12 00:16:54,516 - INFO - 🔍 Calling Analyze Question Agent
+2026-05-12 00:16:59,880 - INFO - 📊 Analyze Question Agent completed:
+2026-05-12 00:16:59,880 - INFO -    - Location needed: True
+2026-05-12 00:16:59,880 - INFO -    - Data acquisition needed: True
+2026-05-12 00:16:59,880 - INFO -    - Analysis contract: {'measurement_target': 'built_up_area_share', 'expected_unit': 'percent_of_area', 'comparison_type': 'between_periods', 'required_file_roles': ['swir', 'nir'], 'invalid_methods': ['raw_band_mean_as_area_share', 'red_nir_as_built_up_proxy']}
+2026-05-12 00:16:59,880 - INFO - 🗺️ Calling Location Agent with query: 'Новосибирск'
+2026-05-12 00:16:59,881 - INFO -    Reason: Для получения спутниковых снимков района Новосибирска
+2026-05-12 00:16:59,881 - INFO -    Context: Анализ застроенных территорий в Новосибирске за указанные годы
+2026-05-12 00:17:11,106 - INFO - 📊 Location Agent completed:
+2026-05-12 00:17:11,106 - INFO -    - Found: True
+2026-05-12 00:17:11,106 - INFO -    - Attempts: 0
+2026-05-12 00:17:11,106 - INFO -    - Coordinates: lat=54.9678145, lon=82.9515989
+2026-05-12 00:17:11,106 - INFO -    - Display name: Новосибирск, Новосибирская область, Сибирский федеральный округ, 630000, Россия
+2026-05-12 00:17:11,106 - INFO -    - Tool calls made:
+2026-05-12 00:17:11,106 - INFO -    - Agent thoughts:
+2026-05-12 00:17:11,106 - INFO -      1. Вот координаты для локации "Новосибирск":
+
+```json
+{
+  "found": true,
+  "lat": 54.9678145,
+  "lon": 82.9515989,
+  "bbox": [82.7511322, 54.8009038, 83....
+2026-05-12 00:17:11,107 - INFO - 📡 Calling Data Acquisition Agent...
+2026-05-12 00:17:11,107 - INFO -    Requirements:
+Найди и скачай спутниковые снимки для анализа:
+
+Локация: bbox=[82.7511322, 54.8009038, 83.1602273, 55.1994565]
+
+Временные периоды:
+  1. 2021: 2021-08-20 - 2021-08-30
+  2. 2022: 2022-05-22 - 2022-05-30
+  3. 2023: 2023-06-01 - 2023-06-10
+
+Цель анализа: Анализ застроенных территорий с использованием спутниковых данных
+
+Аналитический контракт для выбора данных:
+{
+  "measurement_target": "built_up_area_share",
+  "expected_unit": "percent_of_area",
+  "comparison_type": "between_periods",
+  "required_file_roles": [
+    "swir",
+    "nir"
+  ],
+  "invalid_methods": [
+    "raw_band_mean_as_area_share",
+    "red_nir_as_built_up_proxy"
+  ]
+}
+
+Сохранить файлы в директорию: question_6/
+
+2026-05-12 00:18:19,533 - INFO - 📊 Data Acquisition Agent completed:
+2026-05-12 00:18:19,534 - INFO -    - Success: True
+2026-05-12 00:18:19,534 - INFO -    - Files downloaded: 6
+2026-05-12 00:18:19,534 - INFO -    - Total attempts: 0
+2026-05-12 00:18:19,534 - INFO -      1. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_6\2021_B11.tif
+2026-05-12 00:18:19,534 - INFO -      2. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_6\2021_B8.tif
+2026-05-12 00:18:19,534 - INFO -      3. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_6\2022_B11.tif
+2026-05-12 00:18:19,534 - INFO -      4. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_6\2022_B8.tif
+2026-05-12 00:18:19,534 - INFO -      5. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_6\2023_B11.tif
+2026-05-12 00:18:19,534 - INFO -      6. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_6\2023_B8.tif
+2026-05-12 00:18:19,534 - INFO - 🤖 Calling Main Agent
+2026-05-12 00:19:51,765 - INFO - 🔍 Calling Analyze Question Agent
+2026-05-12 00:19:56,603 - INFO - 📊 Analyze Question Agent completed:
+2026-05-12 00:19:56,603 - INFO -    - Location needed: True
+2026-05-12 00:19:56,604 - INFO -    - Data acquisition needed: True
+2026-05-12 00:19:56,604 - INFO -    - Analysis contract: {'measurement_target': 'built_up_area_share', 'expected_unit': 'percent_of_area', 'comparison_type': 'between_periods', 'required_file_roles': ['swir', 'nir'], 'invalid_methods': ['raw_band_mean_as_area_share', 'mean_index_value_as_area_share', 'red_nir_as_built_up_proxy']}
+2026-05-12 00:19:56,605 - INFO - 🗺️ Calling Location Agent with query: 'Новосибирск'
+2026-05-12 00:19:56,605 - INFO -    Reason: Для получения спутниковых снимков застроенных территорий в Новосибирске
+2026-05-12 00:19:56,605 - INFO -    Context: Анализ застроенных территорий в 2022 и 2023 годах
+2026-05-12 00:20:05,079 - INFO - 📊 Location Agent completed:
+2026-05-12 00:20:05,079 - INFO -    - Found: True
+2026-05-12 00:20:05,079 - INFO -    - Attempts: 0
+2026-05-12 00:20:05,079 - INFO -    - Coordinates: lat=54.9678145, lon=82.9515989
+2026-05-12 00:20:05,079 - INFO -    - Display name: Новосибирск, Новосибирская область, Сибирский федеральный округ, 630000, Россия
+2026-05-12 00:20:05,079 - INFO -    - Tool calls made:
+2026-05-12 00:20:05,079 - INFO -    - Agent thoughts:
+2026-05-12 00:20:05,079 - INFO -      1. ```json
+{
+  "found": true,
+  "lat": 54.9678145,
+  "lon": 82.9515989,
+  "bbox": [82.7511322, 54.8009038, 83.1602273, 55.1994565],
+  "display_name": "Но...
+2026-05-12 00:20:05,079 - INFO - 📡 Calling Data Acquisition Agent...
+2026-05-12 00:20:05,079 - INFO -    Requirements:
+Найди и скачай спутниковые снимки для анализа:
+
+Локация: bbox=[82.7511322, 54.8009038, 83.1602273, 55.1994565]
+
+Временные периоды:
+  1. 2022: 2022-05-20 - 2022-05-30
+  2. 2023: 2023-06-01 - 2023-06-10
+
+Цель анализа: Сравнение показателей застроенных территорий
+
+Аналитический контракт для выбора данных:
+{
+  "measurement_target": "built_up_area_share",
+  "expected_unit": "percent_of_area",
+  "comparison_type": "between_periods",
+  "required_file_roles": [
+    "swir",
+    "nir"
+  ],
+  "invalid_methods": [
+    "raw_band_mean_as_area_share",
+    "mean_index_value_as_area_share",
+    "red_nir_as_built_up_proxy"
+  ]
+}
+
+Сохранить файлы в директорию: question_7/
+
+2026-05-12 00:21:10,024 - INFO - 📊 Data Acquisition Agent completed:
+2026-05-12 00:21:10,024 - INFO -    - Success: True
+2026-05-12 00:21:10,024 - INFO -    - Files downloaded: 4
+2026-05-12 00:21:10,024 - INFO -    - Total attempts: 0
+2026-05-12 00:21:10,024 - INFO -      1. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_7\2022_B11.tif
+2026-05-12 00:21:10,024 - INFO -      2. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_7\2022_B8.tif
+2026-05-12 00:21:10,024 - INFO -      3. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_7\2023_B11.tif
+2026-05-12 00:21:10,024 - INFO -      4. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_7\2023_B8.tif
+2026-05-12 00:21:10,025 - INFO - 🤖 Calling Main Agent
+2026-05-12 00:21:44,641 - INFO - 🔍 Calling Analyze Question Agent
+2026-05-12 00:21:50,479 - INFO - 📊 Analyze Question Agent completed:
+2026-05-12 00:21:50,480 - INFO -    - Location needed: True
+2026-05-12 00:21:50,480 - INFO -    - Data acquisition needed: True
+2026-05-12 00:21:50,480 - INFO -    - Analysis contract: {'measurement_target': 'water_turbidity_proxy', 'expected_unit': 'index_value', 'comparison_type': 'between_periods', 'required_file_roles': ['red', 'green'], 'invalid_methods': ['water_area_share_as_turbidity', 'ndwi_as_turbidity', 'green_nir_area_proxy_as_turbidity']}
+2026-05-12 00:21:50,481 - INFO - 🗺️ Calling Location Agent with query: 'набережная Санкт-Петербурга'
+2026-05-12 00:21:50,481 - INFO -    Reason: Для получения спутниковых снимков набережной и анализа мутности воды
+2026-05-12 00:21:50,481 - INFO -    Context: Анализ оптического показателя мутности воды в реке или водоеме у набережной
+2026-05-12 00:22:13,975 - INFO - 📊 Location Agent completed:
+2026-05-12 00:22:13,975 - INFO -    - Found: True
+2026-05-12 00:22:13,976 - INFO -    - Attempts: 0
+2026-05-12 00:22:13,976 - INFO -    - Coordinates: lat=59.9289369, lon=30.2972276
+2026-05-12 00:22:13,976 - INFO -    - Display name: набережная реки Мойки, Адмиралтейский округ, Санкт-Петербург, Северо-Западный федеральный округ, 197000, Россия
+2026-05-12 00:22:13,976 - INFO -    - Tool calls made:
+2026-05-12 00:22:13,976 - INFO -    - Agent thoughts:
+2026-05-12 00:22:13,976 - INFO -      1. Вот координаты для набережной реки Мойки в Санкт-Петербурге:
+
+```json
+{
+  "found": true,
+  "lat": 59.9289369,
+  "lon": 30.2972276,
+  "bbox": [59.92800...
+2026-05-12 00:22:13,977 - INFO - 📡 Calling Data Acquisition Agent...
+2026-05-12 00:22:13,977 - INFO -    Requirements:
+Найди и скачай спутниковые снимки для анализа:
+
+Локация: bbox=[59.9280022, 30.2952607, 59.9298786, 30.2991896]
+
+Временные периоды:
+  1. 2020: 2020-09-20 - 2020-09-25
+  2. 2023: 2023-06-10 - 2023-06-20
+
+Цель анализа: Оценка оптического показателя мутности воды
+
+Аналитический контракт для выбора данных:
+{
+  "measurement_target": "water_turbidity_proxy",
+  "expected_unit": "index_value",
+  "comparison_type": "between_periods",
+  "required_file_roles": [
+    "red",
+    "green"
+  ],
+  "invalid_methods": [
+    "water_area_share_as_turbidity",
+    "ndwi_as_turbidity",
+    "green_nir_area_proxy_as_turbidity"
+  ]
+}
+
+Сохранить файлы в директорию: question_8/
+
+2026-05-12 00:23:19,843 - INFO - 📊 Data Acquisition Agent completed:
+2026-05-12 00:23:19,843 - INFO -    - Success: True
+2026-05-12 00:23:19,843 - INFO -    - Files downloaded: 4
+2026-05-12 00:23:19,843 - INFO -    - Total attempts: 0
+2026-05-12 00:23:19,843 - INFO -      1. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_8\2020_B3.tif
+2026-05-12 00:23:19,843 - INFO -      2. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_8\2020_B4.tif
+2026-05-12 00:23:19,843 - INFO -      3. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_8\2023_B3.tif
+2026-05-12 00:23:19,843 - INFO -      4. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_8\2023_B4.tif
+2026-05-12 00:23:19,843 - INFO - 🤖 Calling Main Agent
+2026-05-12 00:24:26,252 - INFO - 🔍 Calling Analyze Question Agent
+2026-05-12 00:24:35,123 - INFO - 📊 Analyze Question Agent completed:
+2026-05-12 00:24:35,123 - INFO -    - Location needed: True
+2026-05-12 00:24:35,123 - INFO -    - Data acquisition needed: True
+2026-05-12 00:24:35,123 - INFO -    - Analysis contract: {'measurement_target': 'vegetation_area_share', 'expected_unit': 'percent_of_area', 'comparison_type': 'between_periods', 'required_file_roles': ['nir', 'red'], 'invalid_methods': ['raw_band_mean_as_area_share', 'mean_index_value_as_area_share']}
+2026-05-12 00:24:35,123 - INFO - 🗺️ Calling Location Agent with query: 'Казань, Татарстан'
+2026-05-12 00:24:35,123 - INFO -    Reason: Для получения спутниковых снимков территории Казани
+2026-05-12 00:24:35,123 - INFO -    Context: Анализ доли территории с растительностью в Казани
+2026-05-12 00:24:44,802 - INFO - 📊 Location Agent completed:
+2026-05-12 00:24:44,802 - INFO -    - Found: True
+2026-05-12 00:24:44,802 - INFO -    - Attempts: 0
+2026-05-12 00:24:44,802 - INFO -    - Coordinates: lat=55.7946485, lon=49.1115022
+2026-05-12 00:24:44,802 - INFO -    - Display name: Казань, городской округ Казань, Татарстан, Приволжский федеральный округ, Россия
+2026-05-12 00:24:44,802 - INFO -    - Tool calls made:
+2026-05-12 00:24:44,802 - INFO -    - Agent thoughts:
+2026-05-12 00:24:44,802 - INFO -      1. ```json
+{
+  "found": true,
+  "lat": 55.7946485,
+  "lon": 49.1115022,
+  "bbox": [49.1115022, 55.6031357, 49.3812469, 55.9307390],
+  "display_name": "Ка...
+2026-05-12 00:24:44,802 - INFO - 📡 Calling Data Acquisition Agent...
+2026-05-12 00:24:44,802 - INFO -    Requirements:
+Найди и скачай спутниковые снимки для анализа:
+
+Локация: bbox=[49.1115022, 55.6031357, 49.3812469, 55.930739]
+
+Временные периоды:
+  1. 2021: 2021-05-20 - 2021-06-20
+  2. 2023: 2023-08-01 - 2023-08-31
+
+Цель анализа: Сравнение доли территории с растительностью
+
+Аналитический контракт для выбора данных:
+{
+  "measurement_target": "vegetation_area_share",
+  "expected_unit": "percent_of_area",
+  "comparison_type": "between_periods",
+  "required_file_roles": [
+    "nir",
+    "red"
+  ],
+  "invalid_methods": [
+    "raw_band_mean_as_area_share",
+    "mean_index_value_as_area_share"
+  ]
+}
+
+Сохранить файлы в директорию: question_9/
+
+2026-05-12 00:25:55,959 - INFO - 📊 Data Acquisition Agent completed:
+2026-05-12 00:25:55,959 - INFO -    - Success: True
+2026-05-12 00:25:55,959 - INFO -    - Files downloaded: 4
+2026-05-12 00:25:55,959 - INFO -    - Total attempts: 0
+2026-05-12 00:25:55,959 - INFO -      1. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_9\2021_B4.tif
+2026-05-12 00:25:55,959 - INFO -      2. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_9\2021_B8.tif
+2026-05-12 00:25:55,959 - INFO -      3. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_9\2023_B4.tif
+2026-05-12 00:25:55,959 - INFO -      4. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_9\2023_B8.tif
+2026-05-12 00:25:55,959 - INFO - 🤖 Calling Main Agent
+2026-05-12 00:26:22,636 - INFO - 🔍 Calling Analyze Question Agent
+2026-05-12 00:26:28,199 - INFO - 📊 Analyze Question Agent completed:
+2026-05-12 00:26:28,199 - INFO -    - Location needed: True
+2026-05-12 00:26:28,199 - INFO -    - Data acquisition needed: True
+2026-05-12 00:26:28,199 - INFO -    - Analysis contract: {'measurement_target': 'built_up_area_share', 'expected_unit': 'percent_of_area', 'comparison_type': 'between_periods', 'required_file_roles': ['swir', 'nir'], 'invalid_methods': ['raw_band_mean_as_area_share', 'mean_index_value_as_area_share', 'red_nir_as_built_up_proxy']}
+2026-05-12 00:26:28,200 - INFO - 🗺️ Calling Location Agent with query: 'Новосибирск'
+2026-05-12 00:26:28,201 - INFO -    Reason: Для получения спутниковых снимков города Новосибирск
+2026-05-12 00:26:28,201 - INFO -    Context: Анализ изменений застроенных территорий в Новосибирске
+2026-05-12 00:26:36,469 - INFO - 📊 Location Agent completed:
+2026-05-12 00:26:36,469 - INFO -    - Found: True
+2026-05-12 00:26:36,469 - INFO -    - Attempts: 0
+2026-05-12 00:26:36,469 - INFO -    - Coordinates: lat=54.9678145, lon=82.9515989
+2026-05-12 00:26:36,469 - INFO -    - Display name: Новосибирск, Новосибирская область, Сибирский федеральный округ, 630000, Россия
+2026-05-12 00:26:36,469 - INFO -    - Tool calls made:
+2026-05-12 00:26:36,469 - INFO -    - Agent thoughts:
+2026-05-12 00:26:36,469 - INFO -      1. Вот координаты для локации "Новосибирск":
+
+```json
+{
+  "found": true,
+  "lat": 54.9678145,
+  "lon": 82.9515989,
+  "bbox": [82.7511322, 54.8009038, 83....
+2026-05-12 00:26:36,469 - INFO - 📡 Calling Data Acquisition Agent...
+2026-05-12 00:26:36,469 - INFO -    Requirements:
+Найди и скачай спутниковые снимки для анализа:
+
+Локация: bbox=[82.7511322, 54.8009038, 83.1602273, 55.1994565]
+
+Временные периоды:
+  1. 2022: 2022-05-01 - 2022-05-31
+  2. 2023: 2023-06-01 - 2023-06-10
+
+Цель анализа: Анализ изменения показателя застроенных территорий
+
+Аналитический контракт для выбора данных:
+{
+  "measurement_target": "built_up_area_share",
+  "expected_unit": "percent_of_area",
+  "comparison_type": "between_periods",
+  "required_file_roles": [
+    "swir",
+    "nir"
+  ],
+  "invalid_methods": [
+    "raw_band_mean_as_area_share",
+    "mean_index_value_as_area_share",
+    "red_nir_as_built_up_proxy"
+  ]
+}
+
+Сохранить файлы в директорию: question_10/
+
+2026-05-12 00:27:41,572 - INFO - 📊 Data Acquisition Agent completed:
+2026-05-12 00:27:41,572 - INFO -    - Success: True
+2026-05-12 00:27:41,572 - INFO -    - Files downloaded: 4
+2026-05-12 00:27:41,572 - INFO -    - Total attempts: 0
+2026-05-12 00:27:41,572 - INFO -      1. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_10\2022_B11.tif
+2026-05-12 00:27:41,572 - INFO -      2. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_10\2022_B8.tif
+2026-05-12 00:27:41,572 - INFO -      3. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_10\2023_B11.tif
+2026-05-12 00:27:41,572 - INFO -      4. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_10\2023_B8.tif
+2026-05-12 00:27:41,573 - INFO - 🤖 Calling Main Agent
+2026-05-12 00:28:37,406 - INFO - 🔍 Calling Analyze Question Agent
+2026-05-12 00:28:44,317 - INFO - 📊 Analyze Question Agent completed:
+2026-05-12 00:28:44,317 - INFO -    - Location needed: True
+2026-05-12 00:28:44,317 - INFO -    - Data acquisition needed: True
+2026-05-12 00:28:44,318 - INFO -    - Analysis contract: {'measurement_target': 'vegetation_area_share', 'expected_unit': 'percent_of_area', 'comparison_type': 'between_periods', 'required_file_roles': ['nir', 'red'], 'invalid_methods': ['raw_band_mean_as_area_share', 'mean_index_value_as_area_share']}
+2026-05-12 00:28:44,319 - INFO - 🗺️ Calling Location Agent with query: 'Казань'
+2026-05-12 00:28:44,319 - INFO -    Reason: Для получения спутниковых снимков города Казани
+2026-05-12 00:28:44,319 - INFO -    Context: Анализ изменения растительного покрова в Казани
+2026-05-12 00:29:04,470 - INFO - 📊 Location Agent completed:
+2026-05-12 00:29:04,470 - INFO -    - Found: True
+2026-05-12 00:29:04,470 - INFO -    - Attempts: 0
+2026-05-12 00:29:04,470 - INFO -    - Coordinates: lat=55.7946485, lon=49.1115022
+2026-05-12 00:29:04,470 - INFO -    - Display name: Казань, городской округ Казань, Татарстан, Приволжский федеральный округ, Россия
+2026-05-12 00:29:04,470 - INFO -    - Tool calls made:
+2026-05-12 00:29:04,470 - INFO -    - Agent thoughts:
+2026-05-12 00:29:04,470 - INFO -      1. ```json
+{
+  "found": true,
+  "lat": 55.7946485,
+  "lon": 49.1115022,
+  "bbox": [49.1115022, 55.6031357, 49.3812469, 55.9307390],
+  "display_name": "Ка...
+2026-05-12 00:29:04,470 - INFO - 📡 Calling Data Acquisition Agent...
+2026-05-12 00:29:04,470 - INFO -    Requirements:
+Найди и скачай спутниковые снимки для анализа:
+
+Локация: bbox=[49.1115022, 55.6031357, 49.3812469, 55.930739]
+
+Временные периоды:
+  1. 2021: 2021-05-20 - 2021-06-20
+  2. 2023: 2023-08-01 - 2023-08-31
+
+Цель анализа: Оценка изменения доли растительного покрова
+
+Аналитический контракт для выбора данных:
+{
+  "measurement_target": "vegetation_area_share",
+  "expected_unit": "percent_of_area",
+  "comparison_type": "between_periods",
+  "required_file_roles": [
+    "nir",
+    "red"
+  ],
+  "invalid_methods": [
+    "raw_band_mean_as_area_share",
+    "mean_index_value_as_area_share"
+  ]
+}
+
+Сохранить файлы в директорию: question_11/
+
+2026-05-12 00:30:09,220 - INFO - 📊 Data Acquisition Agent completed:
+2026-05-12 00:30:09,220 - INFO -    - Success: True
+2026-05-12 00:30:09,220 - INFO -    - Files downloaded: 4
+2026-05-12 00:30:09,220 - INFO -    - Total attempts: 0
+2026-05-12 00:30:09,220 - INFO -      1. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_11\2021_red.tif
+2026-05-12 00:30:09,220 - INFO -      2. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_11\2021_nir.tif
+2026-05-12 00:30:09,220 - INFO -      3. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_11\2023_red.tif
+2026-05-12 00:30:09,220 - INFO -      4. C:\Users\rocks\Documents\study\hse\qual_next\Earth-Agent\evaluate_langchain\gpt-4o_dev_IF_26-05-12_00-02\out\question_11\2023_nir.tif
+2026-05-12 00:30:09,221 - INFO - 🤖 Calling Main Agent

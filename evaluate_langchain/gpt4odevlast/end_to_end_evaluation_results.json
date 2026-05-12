@@ -1,0 +1,193 @@
+{
+  "accuracy": {
+    "total_questions": 11,
+    "evaluated_questions": 11,
+    "correct_answers": 9,
+    "fail_answers": 0,
+    "unknown_answers": 0,
+    "missing_predictions": [],
+    "accuracy": 0.8181818181818182,
+    "detailed_results": [
+      {
+        "question_index": "question1",
+        "ground_truth": "A",
+        "predicted": "A",
+        "correct": true,
+        "status": "correct"
+      },
+      {
+        "question_index": "question2",
+        "ground_truth": "A",
+        "predicted": "B",
+        "correct": false,
+        "status": "incorrect"
+      },
+      {
+        "question_index": "question3",
+        "ground_truth": "B",
+        "predicted": "B",
+        "correct": true,
+        "status": "correct"
+      },
+      {
+        "question_index": "question4",
+        "ground_truth": "C",
+        "predicted": "C",
+        "correct": true,
+        "status": "correct"
+      },
+      {
+        "question_index": "question5",
+        "ground_truth": "A",
+        "predicted": "A",
+        "correct": true,
+        "status": "correct"
+      },
+      {
+        "question_index": "question6",
+        "ground_truth": "B",
+        "predicted": "B",
+        "correct": true,
+        "status": "correct"
+      },
+      {
+        "question_index": "question7",
+        "ground_truth": "C",
+        "predicted": "C",
+        "correct": true,
+        "status": "correct"
+      },
+      {
+        "question_index": "question8",
+        "ground_truth": "B",
+        "predicted": "B",
+        "correct": true,
+        "status": "correct"
+      },
+      {
+        "question_index": "question9",
+        "ground_truth": "B",
+        "predicted": "C",
+        "correct": false,
+        "status": "incorrect"
+      },
+      {
+        "question_index": "question10",
+        "ground_truth": "C",
+        "predicted": "C",
+        "correct": true,
+        "status": "correct"
+      },
+      {
+        "question_index": "question11",
+        "ground_truth": "D",
+        "predicted": "D",
+        "correct": true,
+        "status": "correct"
+      }
+    ]
+  },
+  "efficiency": {
+    "total_questions": 11,
+    "evaluated_questions": 11,
+    "efficiency_scores": [
+      2.5714285714285716,
+      2.5714285714285716,
+      3.0,
+      1.4285714285714286,
+      1.2857142857142858,
+      1.7142857142857142,
+      1.5714285714285714,
+      1.8571428571428572,
+      1.2857142857142858,
+      1.4285714285714286,
+      1.4285714285714286
+    ],
+    "average_efficiency": 1.8311688311688308,
+    "detailed_results": [
+      {
+        "question_index": "question1",
+        "gt_tool_count": 7,
+        "model_tool_count": 18,
+        "efficiency": 2.5714285714285716,
+        "status": "evaluated"
+      },
+      {
+        "question_index": "question2",
+        "gt_tool_count": 7,
+        "model_tool_count": 18,
+        "efficiency": 2.5714285714285716,
+        "status": "evaluated"
+      },
+      {
+        "question_index": "question3",
+        "gt_tool_count": 6,
+        "model_tool_count": 18,
+        "efficiency": 3.0,
+        "status": "evaluated"
+      },
+      {
+        "question_index": "question4",
+        "gt_tool_count": 7,
+        "model_tool_count": 10,
+        "efficiency": 1.4285714285714286,
+        "status": "evaluated"
+      },
+      {
+        "question_index": "question5",
+        "gt_tool_count": 7,
+        "model_tool_count": 9,
+        "efficiency": 1.2857142857142858,
+        "status": "evaluated"
+      },
+      {
+        "question_index": "question6",
+        "gt_tool_count": 7,
+        "model_tool_count": 12,
+        "efficiency": 1.7142857142857142,
+        "status": "evaluated"
+      },
+      {
+        "question_index": "question7",
+        "gt_tool_count": 7,
+        "model_tool_count": 11,
+        "efficiency": 1.5714285714285714,
+        "status": "evaluated"
+      },
+      {
+        "question_index": "question8",
+        "gt_tool_count": 7,
+        "model_tool_count": 13,
+        "efficiency": 1.8571428571428572,
+        "status": "evaluated"
+      },
+      {
+        "question_index": "question9",
+        "gt_tool_count": 7,
+        "model_tool_count": 9,
+        "efficiency": 1.2857142857142858,
+        "status": "evaluated"
+      },
+      {
+        "question_index": "question10",
+        "gt_tool_count": 7,
+        "model_tool_count": 10,
+        "efficiency": 1.4285714285714286,
+        "status": "evaluated"
+      },
+      {
+        "question_index": "question11",
+        "gt_tool_count": 7,
+        "model_tool_count": 10,
+        "efficiency": 1.4285714285714286,
+        "status": "evaluated"
+      }
+    ]
+  },
+  "summary": {
+    "total_questions": 11,
+    "accuracy_rate": 0.8181818181818182,
+    "average_efficiency": 1.8311688311688308,
+    "fail_rate": 0.0
+  }
+}
